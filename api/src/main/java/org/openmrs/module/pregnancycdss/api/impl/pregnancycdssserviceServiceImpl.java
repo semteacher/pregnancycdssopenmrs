@@ -13,9 +13,11 @@
  */
 package org.openmrs.module.pregnancycdss.api.impl;
 
+import java.util.List;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -40,5 +42,13 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
      */
     public pregnancycdssserviceDAO getDao() {
 	    return dao;
+    }
+
+    @Override
+    public List<SymptCategoryModel> getAllSymptCategories() {
+        log.debug("semteacher: 1. Calling dao from service...");
+        return dao.getAllAppointments();
+
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -13,7 +13,10 @@
  */
 package org.openmrs.module.pregnancycdss.api;
 
+import java.util.List;
+import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -33,4 +36,6 @@ public interface pregnancycdssserviceService extends OpenmrsService {
 	 * Add service methods here
 	 * 
 	 */
+    public List<SymptCategoryModel> getAllSymptCategories() throws APIException;
+
 }

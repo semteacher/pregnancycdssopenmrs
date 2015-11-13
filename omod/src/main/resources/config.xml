@@ -28,8 +28,8 @@
 	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
-				
-		pregnacycdssmodel.hbm.xml
+                SymptCategoryModel.hbm.xml	
+		<!--pregnacycdssmodel.hbm.xml-->
 				
 	</mappingFiles>
 

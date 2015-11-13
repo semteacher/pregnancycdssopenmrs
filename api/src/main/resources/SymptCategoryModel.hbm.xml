@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.openmrs.module.pregnancycdss">
+  <class name="SymptCategoryModel" table="form_pregnancycdss_sympt_category">
+    <id column="id" name="id" type="int" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <property column="cat_name" length="100" name="cat_name" type="java.lang.String" unique="false"/>
+    <property column="cat_notes" length="150" name="cat_notes" type="java.lang.String" unique="false"/>
+    <property column="is_selected" name="is_selected" type="org.hibernate.type.NumericBooleanType" unique="false"/>
+  </class>
+</hibernate-mapping>

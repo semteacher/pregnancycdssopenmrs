@@ -21,6 +21,9 @@
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_diseases"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-002" author="SemenetsA" dbms="mysql">
         <sql>
@@ -32,13 +35,16 @@
     <changeSet id="pregnancycdssmodule-2015-11-v-003" author="SemenetsA" dbms="mysql">
         <sql>
             CREATE TABLE IF NOT EXISTS `form_pregnancycdss_sympt_category` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `id` int NOT NULL AUTO_INCREMENT,
             `cat_name` varchar(100) COLLATE utf8_general_ci DEFAULT NULL,
             `cat_notes` varchar(150) COLLATE utf8_general_ci DEFAULT NULL,
             `is_selected` tinyint(4) NOT NULL DEFAULT '1',
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=8
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_sympt_category"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-004" author="SemenetsA" dbms="mysql">
         <sql>
@@ -66,6 +72,9 @@
             KEY `symptoms_symptomsid_category_ndx` (`id_category`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=73
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_symptoms"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-006" author="SemenetsA" dbms="mysql">
         <sql>
@@ -156,6 +165,9 @@
             KEY `sympt_options_symptomssympt_options_ndx` (`id_symptom`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=238
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_sympt_options"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-008" author="SemenetsA" dbms="mysql">
         <sql>
@@ -409,6 +421,9 @@
             KEY `diseases_sympt_opt_id_symptom_ndx` (`id_sympt_opt`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=205
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_diseases_sympt_opt"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-010" author="SemenetsA" dbms="mysql">
         <sql>
@@ -664,12 +679,18 @@
             KEY `symptoms_by_patient_id_symptom_ndx` (`id_symptom`)
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1
         </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_symptopt_by_patient"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-013" author="SemenetsA" dbms="mysql">
         <sql>
             ALTER TABLE `form_pregnancycdss_symptopt_by_patient`
             ADD CONSTRAINT `form_pregnancycdss_symptopt_by_patient_ibfk_1` FOREIGN KEY (`id_exam`) REFERENCES `form_pregnancycdss_patient_exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
         </sql>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="form_pregnancycdss_symptopt_by_patient" constraintName="form_pregnancycdss_symptopt_by_patient_ibfk_1"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-014" author="SemenetsA" dbms="mysql">
         <sql>
@@ -677,18 +698,28 @@
             ADD CONSTRAINT `form_diseases_sympt_opt_ibfk_1` FOREIGN KEY (`id_diseases`) REFERENCES `form_pregnancycdss_diseases` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
             ADD CONSTRAINT `form_diseases_sympt_opt_ibfk_2` FOREIGN KEY (`id_sympt_opt`) REFERENCES `form_pregnancycdss_sympt_options` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
         </sql>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="form_pregnancycdss_diseases_sympt_opt" constraintName="form_diseases_sympt_opt_ibfk_1"/>
+            <dropForeignKeyConstraint baseTableName="form_pregnancycdss_diseases_sympt_opt" constraintName="form_diseases_sympt_opt_ibfk_2"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-015" author="SemenetsA" dbms="mysql">
         <sql>
             ALTER TABLE `form_pregnancycdss_symptoms`
             ADD CONSTRAINT `form_symptoms_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `form_pregnancycdss_sympt_category` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
         </sql>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="form_pregnancycdss_symptoms" constraintName="form_symptoms_ibfk_1"/>
+        </rollback>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-016" author="SemenetsA" dbms="mysql">
         <sql>
             ALTER TABLE `form_pregnancycdss_sympt_options`
             ADD CONSTRAINT `form_sympt_options_ibfk_1` FOREIGN KEY (`id_symptom`) REFERENCES `form_pregnancycdss_symptoms` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
         </sql>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="form_pregnancycdss_sympt_options" constraintName="form_sympt_options_ibfk_1"/>
+        </rollback>
     </changeSet>
     <changeSet author="SemenetsA" id="pregnancycdssmodule-2015-11-v-100" runAlways="true" dbms="mysql">
         <sql>SET FOREIGN_KEY_CHECKS=1</sql>

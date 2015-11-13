@@ -21,6 +21,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.openmrs.module.pregnancycdss.SymptCategoryModel;
+import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
+
 /**
  * The main controller.
  */
@@ -32,5 +35,7 @@ public class  PregnancyCDSSManageController {
 	@RequestMapping(value = "/module/pregnancycdss/manage", method = RequestMethod.GET)
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
+                log.debug("semteacher: 0. Try to get symptcategorylist from db: invoke service call...");
+                model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
 	}
 }

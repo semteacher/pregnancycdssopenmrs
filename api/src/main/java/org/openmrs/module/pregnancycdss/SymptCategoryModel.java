@@ -16,6 +16,8 @@
 package org.openmrs.module.pregnancycdss;
 
 import java.io.Serializable;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.BaseOpenmrsMetadata;
 
@@ -23,14 +25,17 @@ import org.openmrs.BaseOpenmrsMetadata;
  * It is a model class. It should extend either {@link BaseOpenmrsObject} or
  * {@link BaseOpenmrsMetadata}.
  */
-public class PregnancyCDSSSymptCategoryModel extends BaseOpenmrsObject implements Serializable {
+public class SymptCategoryModel extends BaseOpenmrsObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    //private static final Log log = LogFactory.getLog(SymptCategoryModel.class);
+    protected final Log log = LogFactory.getLog(this.getClass());
 
     private Integer id;
     private String cat_name;
     private String cat_notes;
-    private Integer is_selected;
+    private Boolean is_selected;
 
     @Override
     public Integer getId() {
@@ -58,11 +63,11 @@ public class PregnancyCDSSSymptCategoryModel extends BaseOpenmrsObject implement
         return cat_notes;
     }
 
-    public Integer getIs_selected() {
+    public Boolean getIs_selected() {
         return is_selected;
     }
 
-    public void setIs_selected(Integer is_selected) {
+    public void setIs_selected(Boolean is_selected) {
         this.is_selected = is_selected;
     }
 }

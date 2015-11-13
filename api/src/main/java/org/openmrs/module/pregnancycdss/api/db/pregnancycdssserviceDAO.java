@@ -13,12 +13,16 @@
  */
 package org.openmrs.module.pregnancycdss.api.db;
 
+import java.util.List;
+import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
 /**
  *  Database methods for {@link pregnancycdssserviceService}.
  */
 public interface pregnancycdssserviceDAO {
+
+    public List<SymptCategoryModel> getAllAppointments();
 	
 	/*
 	 * Add DAO methods here
