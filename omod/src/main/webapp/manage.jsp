@@ -8,17 +8,17 @@
 
 <table>
 	<tr>
-		<th>ID</th>
+		<th>CatID</th>
 		<th>Symptom Category Name</th>
 		<th>Symptom Category Description</th>
                 <th>Selected</th>
 	</tr>
 	<c:forEach var="symptcategory" items="${symptcategorylist}">
 		<tr>
-			<td>${symptcategorylist.id}</td>
-			<td>${symptcategorylist.cat_name}</td>
-			<td>${symptcategorylist.cat_note}</td>
-                        <td>${symptcategorylist.is_selected}</td>
+			<td>${symptcategory.symptCatId}</td>
+			<td>${symptcategory.catName}</td>
+			<td>${symptcategory.catNotes}</td>
+                        <td>${symptcategory.isSelected}</td>
 		</tr>
 	</c:forEach>
 </table>

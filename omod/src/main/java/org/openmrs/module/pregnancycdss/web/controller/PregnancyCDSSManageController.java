@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.pregnancycdss.web.controller;
 
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -36,6 +37,13 @@ public class  PregnancyCDSSManageController {
 	public void manage(ModelMap model) {
 		model.addAttribute("user", Context.getAuthenticatedUser());
                 log.debug("semteacher: 0. Try to get symptcategorylist from db: invoke service call...");
-                model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
+                System.out.println("semteacher: 0. Try to get symptcategorylist from db: invoke service call...");
+                List<SymptCategoryModel> symptcategorylist = Context.getService(pregnancycdssserviceService.class).getAllSymptCategories();
+                System.out.println("semteacher: 0.1. Got symptcategorylist from db: ok or not?...");
+                System.out.println(symptcategorylist.get(0).getCatName());
+                //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
+                model.addAttribute("symptcategorylist",symptcategorylist);
+                System.out.println("semteacher: 0.2. completed model variable: ok or not?...");
+                System.out.println(model.toString());
 	}
 }

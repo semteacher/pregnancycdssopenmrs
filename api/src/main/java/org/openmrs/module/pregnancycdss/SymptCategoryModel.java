@@ -28,46 +28,54 @@ import org.openmrs.BaseOpenmrsMetadata;
 public class SymptCategoryModel extends BaseOpenmrsObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     //private static final Log log = LogFactory.getLog(SymptCategoryModel.class);
     protected final Log log = LogFactory.getLog(this.getClass());
 
-    private Integer id;
-    private String cat_name;
-    private String cat_notes;
-    private Boolean is_selected;
+    private Integer symptCatId;
+    private String catName;
+    private String catNotes;
+    private Boolean isSelected;
+
+    public Integer getSymptCatId() {
+        return symptCatId;
+    }
+
+    public void setSymptCatId(Integer symptCatId) {
+        this.symptCatId = symptCatId;
+    }
 
     @Override
     public Integer getId() {
-        return id;
+        return getSymptCatId();
     }
 
     @Override
     public void setId(Integer id) {
-        this.id = id;
+        setSymptCatId(id);
     }
 
-    public String getCat_name() {
-        return cat_name;
+    public String getCatName() {
+        return catName;
     }
 
-    public void setCat_name(String cat_name) {
-        this.cat_name = cat_name;
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 
-    public void setCat_notes(String cat_notes) {
-        this.cat_notes = cat_notes;
+    public void setCatNotes(String catNotes) {
+        this.catNotes = catNotes;
     }
 
-    public String getCat_notes() {
-        return cat_notes;
+    public String getCatNotes() {
+        return catNotes;
     }
 
-    public Boolean getIs_selected() {
-        return is_selected;
+    public Boolean getIsSelected() {
+        return isSelected;
     }
 
-    public void setIs_selected(Boolean is_selected) {
-        this.is_selected = is_selected;
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

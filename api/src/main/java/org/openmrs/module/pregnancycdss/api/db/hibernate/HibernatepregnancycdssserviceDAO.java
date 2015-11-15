@@ -1,15 +1,13 @@
 /**
- * The contents of this file are subject to the OpenMRS Public License
- * Version 1.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://license.openmrs.org
+ * The contents of this file are subject to the OpenMRS Public License Version
+ * 1.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at http://license.openmrs.org
  *
- * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- * License for the specific language governing rights and limitations
- * under the License.
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+ * the specific language governing rights and limitations under the License.
  *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ * Copyright (C) OpenMRS, LLC. All Rights Reserved.
  */
 package org.openmrs.module.pregnancycdss.api.db.hibernate;
 
@@ -23,33 +21,39 @@ import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
 /**
- * It is a default implementation of  {@link pregnancycdssserviceDAO}.
+ * It is a default implementation of {@link pregnancycdssserviceDAO}.
  */
 public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO {
-	protected final Log log = LogFactory.getLog(this.getClass());
-	
-	private SessionFactory sessionFactory;
-	
-	/**
+
+    protected final Log log = LogFactory.getLog(this.getClass());
+
+    private SessionFactory sessionFactory;
+
+    /**
      * @param sessionFactory the sessionFactory to set
      */
     public void setSessionFactory(SessionFactory sessionFactory) {
-	    this.sessionFactory = sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
-    
-	/**
+
+    /**
      * @return the sessionFactory
      */
     public SessionFactory getSessionFactory() {
-	    return sessionFactory;
+        return sessionFactory;
     }
 
     @Override
     public List<SymptCategoryModel> getAllAppointments() {
+        System.out.println("semteacher: 2. dao-getting session...");
         log.debug("semteacher: 2. dao-getting session...");
         Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 3. dao-begin callin data ...");
         log.debug("semteacher: 3. dao-begin callin data ...");
-        List<SymptCategoryModel> symptcategorylist = session.createCriteria(SymptCategoryModel.class).addOrder(Order.asc("cat_name")).list();
+        List<SymptCategoryModel> symptcategorylist = session.createCriteria(SymptCategoryModel.class).addOrder(Order.asc("symptCatId")).list();
+        //List<SymptCategoryModel> symptcategorylist = session. createCriteria(SymptCategoryModel.class).list();
+        System.out.println("semteacher: 4. dao-callin data succesfull...");
+        System.out.println(symptcategorylist.get(0).getCatName());
         log.debug("semteacher: 4. dao-callin data succesfull...");
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return symptcategorylist;
