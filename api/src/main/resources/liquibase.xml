@@ -51,4 +51,34 @@
             (7, 'Результати обстеження', NULL, 1)
         </sql>
     </changeSet>
+    <changeSet id="pregnancycdssmodule-2015-11-v-011" author="SemenetsA" dbms="mysql">
+        <sql>
+            CREATE TABLE IF NOT EXISTS `form_pregnancycdss_patient_exam` (
+            `exam_id` int(11) NOT NULL AUTO_INCREMENT,
+            `exam_date` datetime default NULL,
+            `id_patient` int(11) DEFAULT '0',
+            `id_examuser` int(11) DEFAULT NULL,
+            `groupname` varchar(255) DEFAULT NULL,
+            `authorized` int(11) DEFAULT NULL,
+            `id_activity` int(11) DEFAULT NULL,
+            `id_encounter` int(11) DEFAULT NULL,
+            `id_createuser` int(11) DEFAULT NULL,
+            `createdate` datetime DEFAULT NULL,
+            `is_firstpregnancy` tinyint(4) DEFAULT NULL,
+            `expect_disease` varchar(255) DEFAULT NULL,
+            `diseases` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+            `id_finaldisease` int(11) DEFAULT '0',
+            `finaldisease` varchar(255) DEFAULT NULL,
+            `finaldisease_icd10` varchar(255) DEFAULT NULL,
+            `id_decisiontree_decease` int(11) DEFAULT NULL,
+            `diseases_tree` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+            `decisiontree_img` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+            `uuid` varchar(38) NOT NULL,
+            PRIMARY KEY (`exam_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1
+        </sql>
+        <rollback>
+            <dropTable tableName="form_pregnancycdss_patient_exam"/>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
