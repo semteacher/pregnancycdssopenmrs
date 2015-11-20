@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * It is a default implementation of {@link pregnancycdssserviceService}.
@@ -25,7 +26,8 @@ import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implements pregnancycdssserviceService {
 
     protected final Log log = LogFactory.getLog(this.getClass());
-
+    
+    @Autowired
     private pregnancycdssserviceDAO dao;
 
     /**

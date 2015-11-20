@@ -27,8 +27,11 @@
 	</extension>
 	
 	<!-- Maps hibernate file's, if present -->
+        <packagesWithMappedClasses>
+		org.openmrs.module.pregnancycdss
+	</packagesWithMappedClasses>
 	<mappingFiles>
-                SymptCategoryModel.hbm.xml	
+                <!--SymptCategoryModel.hbm.xml-->	
 		<!--pregnacycdssmodel.hbm.xml-->
 				
 	</mappingFiles>

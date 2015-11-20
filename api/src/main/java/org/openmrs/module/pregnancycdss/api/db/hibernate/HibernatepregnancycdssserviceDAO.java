@@ -19,14 +19,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * It is a default implementation of {@link pregnancycdssserviceDAO}.
  */
+@Repository
 public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO {
 
     protected final Log log = LogFactory.getLog(this.getClass());
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     /**

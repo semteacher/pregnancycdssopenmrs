@@ -15,9 +15,17 @@
  */
 package org.openmrs.module.pregnancycdss;
 
+import javax.persistence.Entity;
+
 import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.annotations.Type;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.BaseOpenmrsMetadata;
 
@@ -25,6 +33,8 @@ import org.openmrs.BaseOpenmrsMetadata;
  * It is a model class. It should extend either {@link BaseOpenmrsObject} or
  * {@link BaseOpenmrsMetadata}.
  */
+@Entity
+@Table(name = "form_pregnancycdss_sympt_category")
 public class SymptCategoryModel extends BaseOpenmrsObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,9 +42,19 @@ public class SymptCategoryModel extends BaseOpenmrsObject implements Serializabl
     //private static final Log log = LogFactory.getLog(SymptCategoryModel.class);
     protected final Log log = LogFactory.getLog(this.getClass());
 
+    @Id
+    @GeneratedValue
+    @Column(name = "sympt_cat_id")
     private Integer symptCatId;
+    @Basic
+    @Column(name = "cat_name", length = 100)
     private String catName;
+    @Basic
+    @Column(name = "cat_notes", length = 100)
     private String catNotes;
+    @Basic
+    @Column(name = "is_selected")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isSelected;
 
     public Integer getSymptCatId() {
