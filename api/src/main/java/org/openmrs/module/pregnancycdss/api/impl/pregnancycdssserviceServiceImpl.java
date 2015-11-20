@@ -15,7 +15,9 @@ import java.util.List;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.APIException;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
+import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -49,5 +51,12 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         return getDao().getAllAppointments();
 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<DiseasesModel> getAllDiseases() throws APIException {
+        System.out.println("semteacher: 10. Calling dao from service...");
+        log.debug("semteacher: 10. Calling dao from service...");
+        return getDao().getAllDiseases();
     }
 }
