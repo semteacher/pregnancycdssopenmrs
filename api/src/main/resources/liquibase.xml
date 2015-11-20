@@ -21,7 +21,7 @@
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-002" author="SemenetsA" dbms="mysql">
         <sql>
-            INSERT INTO `form_pregnancycdss_diseases` (`diseases_id`, `dis_name`, `dis_note`, `dis_icd10`, `p`) VALUES
+            INSERT INTO `form_pregnancycdss_diseases` (`diseases_id`, `dis_name`, `dis_notes`, `dis_icd10`, `p_value`) VALUES
             (1, 'Своєчасні роди', NULL, NULL, 0.5),
             (2, 'Передчасні роди', NULL, NULL, 0.5)
         </sql>
