@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -57,5 +58,19 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         log.debug("semteacher: 4. dao-callin data succesfull...");
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return symptcategorylist;
+    }
+
+    @Override
+    public List<DiseasesModel> getAllDiseases() {
+        System.out.println("semteacher: 20. dao-getting session...");
+        log.debug("semteacher: 20. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 30. dao-begin callin data ...");
+        log.debug("semteacher: 30. dao-begin callin data ...");
+        List<DiseasesModel> diseaseslist = session.createCriteria(DiseasesModel.class).list();
+        System.out.println("semteacher: 40. dao-callin data succesfull...");
+        System.out.println(diseaseslist.get(0).getDiseasesName());
+        log.debug("semteacher: 40. dao-callin data succesfull...");
+        return diseaseslist;
     }
 }
