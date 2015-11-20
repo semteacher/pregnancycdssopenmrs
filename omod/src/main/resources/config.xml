@@ -27,10 +27,10 @@
 	</extension>
         
         	<!-- Adds link between encounter metadata and obs list -->
-	<extension>
+	<!--<extension>
 		<point>org.openmrs.admin.encounters.encounterFormBeforeObs</point>
 		<class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.PregnancyCDSSEncounterForm</class>
-	</extension>
+	</extension>-->
 	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
