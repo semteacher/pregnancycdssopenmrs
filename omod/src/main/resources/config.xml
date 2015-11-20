@@ -34,7 +34,8 @@
 	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
-                SymptCategoryModel.hbm.xml	
+                SymptCategoryModel.hbm.xml
+                DiseasesModel.hbm.xml	
 		<!--pregnacycdssmodel.hbm.xml-->
 				
 	</mappingFiles>
