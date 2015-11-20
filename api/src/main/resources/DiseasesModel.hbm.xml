@@ -10,6 +10,6 @@
     <property name="diseasesNotes" type="java.lang.String" column="dis_notes" length="255" unique="false"/>
     <property name="diseasesICD10" type="java.lang.String" column="dis_icd10" length="255" unique="false"/>
     <property name="pValue" type="java.lang.Double" column="p_value" unique="false"/>
-    <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true" />
+    
   </class>
 </hibernate-mapping>

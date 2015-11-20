@@ -14,9 +14,6 @@
             <column name="dis_notes" type="varchar(255)" />
             <column name="dis_icd10" type="varchar(255)" />
             <column name="p_value" type="float"/>
-            <column name="uuid" type="char(38)">
-                <constraints nullable="false" unique="true"/>
-            </column>
         </createTable>
         <rollback>
             <dropTable tableName="form_pregnancycdss_diseases"/>
@@ -24,9 +21,9 @@
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-002" author="SemenetsA" dbms="mysql">
         <sql>
-            INSERT INTO `form_pregnancycdss_diseases` (`id`, `dis_name`, `dis_note`, `dis_icd10`, `p`, `uuid`) VALUES
-            (1, 'Своєчасні роди', NULL, NULL, 0.5, uuid()),
-            (2, 'Передчасні роди', NULL, NULL, 0.5, uuid())
+            INSERT INTO `form_pregnancycdss_diseases` (`diseases_id`, `dis_name`, `dis_note`, `dis_icd10`, `p`) VALUES
+            (1, 'Своєчасні роди', NULL, NULL, 0.5),
+            (2, 'Передчасні роди', NULL, NULL, 0.5)
         </sql>
     </changeSet>
     <changeSet id="pregnancycdssmodule-2015-11-v-003" author="SemenetsA" dbms="mysql">
