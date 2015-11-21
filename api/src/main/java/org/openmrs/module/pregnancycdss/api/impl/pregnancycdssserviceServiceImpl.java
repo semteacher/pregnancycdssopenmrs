@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -58,5 +59,12 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         System.out.println("semteacher: 10. Calling dao from service...");
         log.debug("semteacher: 10. Calling dao from service...");
         return getDao().getAllDiseases();
+    }
+    
+        @Override
+    public List<PatientExamModel> getAllPatientExamForms() throws APIException {
+        System.out.println("semteacher: 100. Calling dao from service...");
+        log.debug("semteacher: 100. Calling dao from service...");
+        return getDao().getAllPatientExamForms();
     }
 }

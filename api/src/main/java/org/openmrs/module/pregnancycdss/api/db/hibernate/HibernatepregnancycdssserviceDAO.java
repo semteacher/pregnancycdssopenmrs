@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -72,5 +73,20 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         System.out.println(diseaseslist.get(0).getDiseasesName());
         log.debug("semteacher: 40. dao-callin data succesfull...");
         return diseaseslist;
+    }
+
+    @Override
+    public List<PatientExamModel> getAllPatientExamForms() {
+        System.out.println("semteacher: 200. dao-getting session...");
+        log.debug("semteacher: 200. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 300. dao-begin callin data ...");
+        log.debug("semteacher: 300. dao-begin callin data ...");
+        List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
+        log.debug("semteacher: 400. dao-callin data succesfull? record count:"+patientexamformslist.size());
+        System.out.println("semteacher: 400. dao-callin data succesfull? record count:");
+        System.out.println(patientexamformslist.size());
+        
+        return patientexamformslist;
     }
 }

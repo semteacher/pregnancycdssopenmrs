@@ -18,6 +18,7 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,5 +40,6 @@ public interface pregnancycdssserviceService extends OpenmrsService {
 	 */
     public List<SymptCategoryModel> getAllSymptCategories() throws APIException;
     public List<DiseasesModel> getAllDiseases() throws APIException;
+    public List<PatientExamModel> getAllPatientExamForms() throws APIException;
 
 }
