@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="org.openmrs.module.pregnancycdss">
-  <class name="DiseasesModel" table="form_pregnancycdss_diseases">
-    <id name="diseasesId" type="java.lang.Integer" column="diseases_id" unsaved-value="3">
-      <generator class="native"/>
-    </id>
-    <discriminator column="diseases_id" insert="false" />
+    <class name="DiseasesModel" table="form_pregnancycdss_diseases" dynamic-insert="false" dynamic-update="false" mutable="true" optimistic-lock="version" polymorphism="implicit" select-before-update="false" >
+        <id name="diseasesId" type="java.lang.Integer" column="diseases_id" unsaved-value="3">
+            <generator class="native"/>
+        </id>
+        <discriminator column="diseases_id" insert="false" />
     
-    <property name="diseasesName" type="java.lang.String" column="dis_name" length="100" unique="false"/>
-    <property name="diseasesNotes" type="java.lang.String" column="dis_notes" length="255" unique="false"/>
-    <property name="diseasesICD10" type="java.lang.String" column="dis_icd10" length="255" unique="false"/>
-    <property name="pValue" type="java.lang.Double" column="p_value" unique="false"/>
+        <property name="diseasesName" type="java.lang.String" column="dis_name" length="100" unique="false"/>
+        <property name="diseasesNotes" type="java.lang.String" column="dis_notes" length="255" unique="false"/>
+        <property name="diseasesICD10" type="java.lang.String" column="dis_icd10" length="255" unique="false"/>
+        <property name="pValue" type="java.lang.Float" column="p_value" unique="false"/>
     
-  </class>
+    </class>
 </hibernate-mapping>

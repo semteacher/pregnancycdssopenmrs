@@ -33,7 +33,7 @@ public class DiseasesModel extends BaseOpenmrsObject implements Serializable {
     private String diseasesName;
     private String diseasesNotes;
     private String diseasesICD10;
-    private Double pValue;
+    private Float pValue;
 
     public Integer getDiseasesId() {
         return diseasesId;
@@ -67,11 +67,11 @@ public class DiseasesModel extends BaseOpenmrsObject implements Serializable {
         this.diseasesICD10 = diseasesICD10;
     }
 
-    public Double getpValue() {
+    public Float getpValue() {
         return pValue;
     }
 
-    public void setpValue(Double pValue) {
+    public void setpValue(Float pValue) {
         this.pValue = pValue;
     }
 
