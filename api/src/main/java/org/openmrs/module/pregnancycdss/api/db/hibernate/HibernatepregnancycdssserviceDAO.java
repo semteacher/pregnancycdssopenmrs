@@ -54,11 +54,13 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         Session session = sessionFactory.getCurrentSession();
         System.out.println("semteacher: 3. dao-begin callin data ...");
         log.debug("semteacher: 3. dao-begin callin data ...");
-        List<SymptCategoryModel> symptcategorylist = session.createCriteria(SymptCategoryModel.class).addOrder(Order.asc("symptCatId")).list();
-        //List<SymptCategoryModel> symptcategorylist = session. createCriteria(SymptCategoryModel.class).list();
+        //List<SymptCategoryModel> symptcategorylist = session.load(SymptCategoryModel.class, session).getClass().;
+        //List<SymptCategoryModel> symptcategorylist = session.createCriteria(SymptCategoryModel.class).addOrder(Order.asc("symptCatId")).list();
+        List<SymptCategoryModel> symptcategorylist = session. createCriteria(SymptCategoryModel.class).list();
         System.out.println("semteacher: 4. dao-callin data succesfull...");
-        System.out.println(symptcategorylist.get(0).getCatName());
         log.debug("semteacher: 4. dao-callin data succesfull...");
+        System.out.println("semteacher: 4.1. dao-callin data succesfull-test data size:");
+        System.out.println(symptcategorylist.size());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return symptcategorylist;
     }
