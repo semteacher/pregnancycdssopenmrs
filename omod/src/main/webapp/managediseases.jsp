@@ -23,24 +23,17 @@
             <th>Disease Name</th>
             <th>Disease Description</th>
             <th>ICD10 Disease</th>
+            <th>p Value</th>
         </tr>
     </thead>
     <tbody>
-        <c:forEach var="symptcategory" items="${symptcategorylist}">
+        <c:forEach var="disease" items="${diseaseslist}">
             <tr>
-                <td>${symptcategory.symptCatId}</td>
-                <td>${symptcategory.catName}</td>
-                <td>${symptcategory.catNotes}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${symptcategory.isSelected == true}">
-                            Yes
-                        </c:when>
-                        <c:otherwise>
-                            No
-                        </c:otherwise>
-                    </c:choose>
-                </td>
+                <td>${disease.diseasesId}</td>
+                <td>${disease.diseasesName}</td>
+                <td>${disease.diseasesNotes}</td>
+                <td>${disease.diseasesICD10}</td>
+                <td>${disease.pValue}</td>
             </tr>
         </c:forEach>
     </tbody>
