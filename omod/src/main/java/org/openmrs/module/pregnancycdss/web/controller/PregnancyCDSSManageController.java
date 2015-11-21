@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,11 +53,25 @@ public class PregnancyCDSSManageController {
         log.debug("semteacher: 00. Try to get diseaseslist from db: invoke service call...");
         System.out.println("semteacher: 00. Try to get diseaseslist from db: invoke service call...");
         List<DiseasesModel> diseaseslist = Context.getService(pregnancycdssserviceService.class).getAllDiseases();
-        System.out.println("semteacher: 00.10. Got symptcategorylist from db: ok or not?...");
+        System.out.println("semteacher: 00.10. Got diseaseslist from db: ok or not?...");
         System.out.println(diseaseslist.get(0).getDiseasesName());
         //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
         model.addAttribute("diseaseslist", diseaseslist);
         System.out.println("semteacher: 00.20. completed model variable: ok or not?...");
+        System.out.println(model.toString());
+    }
+    
+        @RequestMapping(value = "/module/pregnancycdss/managepatientexams", method = RequestMethod.GET)
+    public void managepatientexams(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        log.debug("semteacher: 000. Try to get patientexamformslist from db: invoke service call...");
+        System.out.println("semteacher: 000. Try to get patientexamformslist from db: invoke service call...");
+        List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getAllPatientExamForms();
+        System.out.println("semteacher: 000.100. Got patientexamformslist from db: ok or not?...");
+        System.out.println(patientexamformslist.size());
+        //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
+        model.addAttribute("patientexamformslist", patientexamformslist);
+        System.out.println("semteacher: 000.200. completed model variable: ok or not?...");
         System.out.println(model.toString());
     }
 }

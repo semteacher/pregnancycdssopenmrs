@@ -13,6 +13,7 @@ package org.openmrs.module.pregnancycdss.api.db;
 
 import java.util.List;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
@@ -24,7 +25,6 @@ public interface pregnancycdssserviceDAO {
     public List<SymptCategoryModel> getAllAppointments();
 
     public List<DiseasesModel> getAllDiseases();
-    /*
-     * Add DAO methods here
-     */
+
+    public List<PatientExamModel> getAllPatientExamForms();
 }
