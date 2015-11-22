@@ -15,7 +15,8 @@ package org.openmrs.module.pregnancycdss.extension.html;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.Extension;
 //import org.openmrs.module.web.extension.AdministrationSectionExt;
 import org.openmrs.module.web.extension.BoxExt;
@@ -29,6 +30,8 @@ import org.openmrs.module.web.extension.BoxExt;
  */
 public class PregnancyCDSSEncounterForm extends org.openmrs.module.web.extension.BoxExt {
 
+    protected final Log log = LogFactory.getLog(getClass());
+
     /**
      * @see AdministrationSectionExt#getTitle()
      */
@@ -39,13 +42,14 @@ public class PregnancyCDSSEncounterForm extends org.openmrs.module.web.extension
 
     @Override
     public String getPortletUrl() {
-        return "pregnancycdss.portlet";
+        //return "pregnancycdss.portlet";
+        return "encounterPatientExamData.portlet";
     }
 
     @Override
     public String getContent() {
         //throw new UnsupportedOperationException("Not supported yet.");
         System.out.println("1000: PregnancyCDSSEncounterForm: return content of box into the encounter ");
-        return "Semteacher: The current patient Pregnancy Exam Form data will be there!";
+        return "Semteacher: Pregnancy Exam Form data about the current patient the will be there!";
     }
 }
