@@ -1,0 +1,1 @@
+<p>Portlet: The current patient Pregnancy Exam Form data will be there!</p>

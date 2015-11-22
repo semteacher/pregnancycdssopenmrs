@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
-
-
 /**
  * The form controller.
  */
@@ -27,9 +25,15 @@ import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 public class PregnancyCDSSEncounterFormConroller {
 
     protected final Log log = LogFactory.getLog(getClass());
-    
+
     @RequestMapping("/module/pregnancycdss/PregnancyCDSSEncounterForm.box")
-	public String showForm(HttpServletRequest request, @RequestParam("encounterId") Integer encounterId ) {
-    return "";
+    public String showForm(HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("action") String action) {
+        System.out.println("1000: PregnancyCDSSEncounterFormConroller: show form action?");
+        if (action.equals("newPatientExam")) {
+            return "redirect:/module/pregnancycdss/newPatientExam.form?encounterId=" + encounterId;
+        } else {
+            return "";
+        }
+
     }
 }

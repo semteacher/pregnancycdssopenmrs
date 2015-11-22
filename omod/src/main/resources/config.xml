@@ -25,7 +25,11 @@
 		<point>org.openmrs.admin.list</point>
 		<class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.AdminList</class>
 	</extension>
-	
+        <!-- Adds box to encounter form admin page -->
+	<extension>
+		<point>org.openmrs.admin.encounters.encounterFormBeforeObs</point>
+		<class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.PregnancyCDSSEncounterForm</class>
+	</extension>	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
                 SymptCategoryModel.hbm.xml
