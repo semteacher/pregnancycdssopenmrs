@@ -41,5 +41,7 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     public List<SymptCategoryModel> getAllSymptCategories() throws APIException;
     public List<DiseasesModel> getAllDiseases() throws APIException;
     public List<PatientExamModel> getAllPatientExamForms() throws APIException;
+    
+    public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
 
 }

@@ -28,7 +28,6 @@ import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implements pregnancycdssserviceService {
 
     protected final Log log = LogFactory.getLog(this.getClass());
-
     private pregnancycdssserviceDAO dao;
 
     /**
@@ -60,11 +59,18 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         log.debug("semteacher: 10. Calling dao from service...");
         return getDao().getAllDiseases();
     }
-    
-        @Override
+
+    @Override
     public List<PatientExamModel> getAllPatientExamForms() throws APIException {
         System.out.println("semteacher: 100. Calling dao from service...");
         log.debug("semteacher: 100. Calling dao from service...");
         return getDao().getAllPatientExamForms();
+    }
+
+    @Override
+    public PatientExamModel getPatientExamByEncouter(Integer EncouterId) throws APIException {
+        System.out.println("semteacher: 1010. Calling dao from service...");
+        log.debug("semteacher: 1010. Calling dao from service...");
+        return getDao().getPatientExamByEncouter(EncouterId);
     }
 }

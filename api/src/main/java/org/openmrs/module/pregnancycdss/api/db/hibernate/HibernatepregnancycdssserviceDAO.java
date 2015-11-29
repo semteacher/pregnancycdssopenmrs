@@ -17,10 +17,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
+//import org.springframework.transaction.annotation.Transactional;
 
 /**
  * It is a default implementation of {@link pregnancycdssserviceDAO}.
@@ -88,5 +90,39 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         System.out.println(patientexamformslist.size());
         
         return patientexamformslist;
+    }
+
+    @Override
+    //@Transactional(readOnly = true)
+    public PatientExamModel getPatientExamByEncouter(Integer EncouterId) {
+        System.out.println("semteacher: 1200. dao-getting session...");
+        log.debug("semteacher: 1200. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 1300. dao-begin callin data ... encounter ID="+EncouterId.toString());
+        log.debug("semteacher: 1300. dao-begin callin data ...");
+        SymptCategoryModel symptcategoryone = (SymptCategoryModel) session.createCriteria(SymptCategoryModel.class).add(Restrictions.eq("symptCatId", 1)).uniqueResult();
+        System.out.println("semteacher: 1310. test data: "+symptcategoryone.toString());
+        List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
+        log.debug("semteacher: 1320. dao-callin data succesfull? record count:"+patientexamformslist.size());
+        System.out.println("semteacher: 400. dao-callin data succesfull? record count="+patientexamformslist.size());
+
+        PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId)).uniqueResult();
+        System.out.println("semteacher: 1350. test data: "+patientexamform.toString());
+        //cr.add(Restrictions.eq("salary", 2000));
+//        PatientExamModel patientexamform = (PatientExamModel) session.createQuery("from "+PatientExamModel.class.getSimpleName()+" AS pem WHERE pem.encounterId = :encounterId").setParameter("encounterId", EncouterId).uniqueResult();
+//        
+//        PatientExamModel patientexamform = session.createCriteria(PatientExamModel.class).list();
+//        
+//        	public Appointment getAppointmentByVisit(Visit visit) {
+//		return (Appointment) super.sessionFactory
+//				.getCurrentSession()
+//				.createQuery(
+//						"from " + mappedClass.getSimpleName()
+//								+ " at where at.visit = :visit")
+//				.setParameter("visit", visit).uniqueResult();
+//	}
+        
+        
+        return patientexamform;
     }
 }

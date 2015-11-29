@@ -28,7 +28,7 @@ public class PregnancyCDSSEncounterFormConroller {
 
     @RequestMapping("/module/pregnancycdss/PregnancyCDSSEncounterForm.box")
     public String showForm(HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("action") String action) {
-        System.out.println("1000: PregnancyCDSSEncounterFormConroller: show form action?");
+        System.out.println("1001: PregnancyCDSSEncounterFormConroller: show form action?");
         if (action.equals("newPatientExam")) {
             return "redirect:/module/pregnancycdss/patientExam.form?encounterId=" + encounterId;
         } else {

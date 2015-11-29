@@ -60,8 +60,8 @@ public class PregnancyCDSSManageController {
         System.out.println("semteacher: 00.20. completed model variable: ok or not?...");
         System.out.println(model.toString());
     }
-    
-        @RequestMapping(value = "/module/pregnancycdss/managepatientexams", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/module/pregnancycdss/managepatientexams", method = RequestMethod.GET)
     public void managepatientexams(ModelMap model) {
         model.addAttribute("user", Context.getAuthenticatedUser());
         log.debug("semteacher: 000. Try to get patientexamformslist from db: invoke service call...");

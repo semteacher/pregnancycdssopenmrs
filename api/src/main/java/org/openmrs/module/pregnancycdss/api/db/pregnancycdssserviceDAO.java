@@ -27,4 +27,6 @@ public interface pregnancycdssserviceDAO {
     public List<DiseasesModel> getAllDiseases();
 
     public List<PatientExamModel> getAllPatientExamForms();
+
+    public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
 }
