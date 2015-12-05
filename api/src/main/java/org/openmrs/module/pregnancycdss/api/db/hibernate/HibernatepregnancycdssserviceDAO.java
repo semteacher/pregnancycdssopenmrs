@@ -21,6 +21,7 @@ import org.hibernate.criterion.Restrictions;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
+import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 //import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,24 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return symptcategorylist;
     }
-
+    
+    @Override
+    public List<SymptomModel> getAllSymptoms() {
+        System.out.println("semteacher: 10002. dao-getting session...");
+        log.debug("semteacher: 10002. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 10003. dao-begin callin data ...");
+        log.debug("semteacher: 10003. dao-begin callin data ...");
+        List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("symptId")).list();
+        //List<SymptCategoryModel> symptcategorylist = session. createCriteria(SymptCategoryModel.class).list();
+        System.out.println("semteacher: 10004. dao-callin data succesfull...");
+        System.out.println(symptomslist.get(0).getSymptName());
+        log.debug("semteacher: 10004. dao-callin data succesfull...");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return symptomslist;        
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Override
     public List<DiseasesModel> getAllDiseases() {
         System.out.println("semteacher: 20. dao-getting session...");

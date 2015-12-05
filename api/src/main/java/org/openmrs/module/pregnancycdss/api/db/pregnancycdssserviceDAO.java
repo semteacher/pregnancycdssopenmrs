@@ -15,6 +15,7 @@ import java.util.List;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
+import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
 /**
@@ -29,4 +30,6 @@ public interface pregnancycdssserviceDAO {
     public List<PatientExamModel> getAllPatientExamForms();
 
     public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
+
+    public List<SymptomModel> getAllSymptoms();
 }

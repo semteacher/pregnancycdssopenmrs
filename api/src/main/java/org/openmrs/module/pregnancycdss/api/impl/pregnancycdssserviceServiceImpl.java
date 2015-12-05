@@ -19,6 +19,7 @@ import org.openmrs.api.APIException;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
+import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 
@@ -51,6 +52,14 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         return getDao().getAllAppointments();
 
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<SymptomModel> getAllSymptoms() throws APIException {
+        System.out.println("semteacher: 10000. Calling dao from service...");
+        log.debug("semteacher: 10000. Calling dao from service...");
+        return getDao().getAllSymptoms();
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
