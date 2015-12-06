@@ -34,10 +34,10 @@
 	<mappingFiles>
                 SymptCategoryModel.hbm.xml
                 SymptomModel.hbm.xml
+                SymptomOptionModel.hbm.xml
                 DiseasesModel.hbm.xml
                 PatientExamModel.hbm.xml
-		<!--pregnacycdssmodel.hbm.xml-->
-				
+		<!--pregnacycdssmodel.hbm.xml-->				
 	</mappingFiles>
 
 	<!-- Internationalization -->

@@ -16,6 +16,7 @@ import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
+import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
 /**
@@ -32,4 +33,6 @@ public interface pregnancycdssserviceDAO {
     public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
 
     public List<SymptomModel> getAllSymptoms();
+
+    public List<SymptomOptionModel> getAllSymptOptions();
 }

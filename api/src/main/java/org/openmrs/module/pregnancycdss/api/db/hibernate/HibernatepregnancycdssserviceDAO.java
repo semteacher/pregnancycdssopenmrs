@@ -22,6 +22,7 @@ import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
+import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 //import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,6 @@ import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
 public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO {
 
     protected final Log log = LogFactory.getLog(this.getClass());
-
     private SessionFactory sessionFactory;
 
     /**
@@ -63,7 +63,7 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return symptcategorylist;
     }
-    
+
     @Override
     public List<SymptomModel> getAllSymptoms() {
         System.out.println("semteacher: 10002. dao-getting session...");
@@ -73,15 +73,33 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         log.debug("semteacher: 10003. dao-begin callin data ...");
         List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).list();
         //List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("idOrder")).list();
-       
+
         System.out.println("semteacher: 10004. dao-callin data succesfull...");
         System.out.println(symptomslist.get(0).getSymptName());
         log.debug("semteacher: 10004. dao-callin data succesfull...");
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return symptomslist;        
+        return symptomslist;
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
+    @Override
+    public List<SymptomOptionModel> getAllSymptOptions() {
+        System.out.println("semteacher: 20002. dao-getting session...");
+        log.debug("semteacher: 10002. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 20003. dao-begin callin data ...");
+        log.debug("semteacher: 20003. dao-begin callin data ...");
+        List<SymptomOptionModel> symptomoptionslist = session.createCriteria(SymptomOptionModel.class).list();
+        //List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("idOrder")).list();
+
+        System.out.println("semteacher: 20004. dao-callin data succesfull...");
+        System.out.println(symptomoptionslist.get(0).getOptName());
+        log.debug("semteacher: 20004. dao-callin data succesfull...");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return symptomoptionslist;
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     @Override
     public List<DiseasesModel> getAllDiseases() {
         System.out.println("semteacher: 20. dao-getting session...");
@@ -104,10 +122,10 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         System.out.println("semteacher: 300. dao-begin callin data ...");
         log.debug("semteacher: 300. dao-begin callin data ...");
         List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
-        log.debug("semteacher: 400. dao-callin data succesfull? record count:"+patientexamformslist.size());
+        log.debug("semteacher: 400. dao-callin data succesfull? record count:" + patientexamformslist.size());
         System.out.println("semteacher: 400. dao-callin data succesfull? record count:");
         System.out.println(patientexamformslist.size());
-        
+
         return patientexamformslist;
     }
 
@@ -117,16 +135,16 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         System.out.println("semteacher: 1200. dao-getting session...");
         log.debug("semteacher: 1200. dao-getting session...");
         Session session = sessionFactory.getCurrentSession();
-        System.out.println("semteacher: 1300. dao-begin callin data ... encounter ID="+EncouterId.toString());
+        System.out.println("semteacher: 1300. dao-begin callin data ... encounter ID=" + EncouterId.toString());
         log.debug("semteacher: 1300. dao-begin callin data ...");
         SymptCategoryModel symptcategoryone = (SymptCategoryModel) session.createCriteria(SymptCategoryModel.class).add(Restrictions.eq("symptCatId", 1)).uniqueResult();
-        System.out.println("semteacher: 1310. test data: "+symptcategoryone.toString());
+        System.out.println("semteacher: 1310. test data: " + symptcategoryone.toString());
         List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
-        log.debug("semteacher: 1320. dao-callin data succesfull? record count:"+patientexamformslist.size());
-        System.out.println("semteacher: 400. dao-callin data succesfull? record count="+patientexamformslist.size());
+        log.debug("semteacher: 1320. dao-callin data succesfull? record count:" + patientexamformslist.size());
+        System.out.println("semteacher: 400. dao-callin data succesfull? record count=" + patientexamformslist.size());
 
         PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId)).uniqueResult();
-        System.out.println("semteacher: 1350. test data: "+patientexamform.toString());
+        System.out.println("semteacher: 1350. test data: " + patientexamform.toString());
         //cr.add(Restrictions.eq("salary", 2000));
 //        PatientExamModel patientexamform = (PatientExamModel) session.createQuery("from "+PatientExamModel.class.getSimpleName()+" AS pem WHERE pem.encounterId = :encounterId").setParameter("encounterId", EncouterId).uniqueResult();
 //        
@@ -140,8 +158,8 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
 //								+ " at where at.visit = :visit")
 //				.setParameter("visit", visit).uniqueResult();
 //	}
-        
-        
+
+
         return patientexamform;
     }
 }
