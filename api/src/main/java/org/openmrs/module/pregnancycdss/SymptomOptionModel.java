@@ -16,7 +16,6 @@
 package org.openmrs.module.pregnancycdss;
 
 import java.io.Serializable;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.BaseOpenmrsObject;
@@ -26,61 +25,42 @@ import org.openmrs.BaseOpenmrsMetadata;
  * It is a model class. It should extend either {@link BaseOpenmrsObject} or
  * {@link BaseOpenmrsMetadata}.
  */
-public class SymptomModel extends BaseOpenmrsObject implements Serializable {
+public class SymptomOptionModel extends BaseOpenmrsObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //private static final Log log = LogFactory.getLog(SymptCategoryModel.class);
     protected final Log log = LogFactory.getLog(this.getClass());
     
-    private Integer symptId;
-    private String symptName;
-    private String symptNotes;
+    private Integer symptOptId;
+    private String optName;
     private Integer idOrder;
-    private Boolean isMulti;
     private Boolean isSelected;
-    private SymptCategoryModel symptCategory;
-    private List<SymptomOptionModel> symptOpt;
+    private SymptomModel symptom;
 
-    public List<SymptomOptionModel> getSymptOpt() {
-        return symptOpt;
+    public Integer getSymptOptId() {
+        return symptOptId;
     }
 
-    public void setSymptOpt(List<SymptomOptionModel> symptOpt) {
-        this.symptOpt = symptOpt;
-    }
-
-    public Integer getSymptId() {
-        return symptId;
-    }
-
-    public void setSymptId(Integer symptId) {
-        this.symptId = symptId;
+    public void setSymptOptId(Integer symptOptId) {
+        this.symptOptId = symptOptId;
     }
 
     @Override
     public Integer getId() {
-        return getSymptId();
+        return getSymptOptId();
     }
 
     @Override
     public void setId(Integer id) {
-        setSymptId(id);
+        setSymptOptId(id);
     }
 
-    public String getSymptName() {
-        return symptName;
+    public String getOptName() {
+        return optName;
     }
 
-    public void setSymptName(String symptName) {
-        this.symptName = symptName;
-    }
-
-    public void setSymptNotes(String symptNotes) {
-        this.symptNotes = symptNotes;
-    }
-
-    public String getSymptNotes() {
-        return symptNotes;
+    public void setOptName(String optName) {
+        this.optName = optName;
     }
 
     public Integer getIdOrder() {
@@ -91,14 +71,6 @@ public class SymptomModel extends BaseOpenmrsObject implements Serializable {
         this.idOrder = idOrder;
     }
 
-    public Boolean getIsMulti() {
-        return isMulti;
-    }
-
-    public void setIsMulti(Boolean isMulti) {
-        this.isMulti = isMulti;
-    }
-
     public Boolean getIsSelected() {
         return isSelected;
     }
@@ -107,11 +79,11 @@ public class SymptomModel extends BaseOpenmrsObject implements Serializable {
         this.isSelected = isSelected;
     }
 
-    public SymptCategoryModel getSymptCategory() {
-        return symptCategory;
+    public SymptomModel getSymptom() {
+        return symptom;
     }
 
-    public void setSymptCategory(SymptCategoryModel symptCategory) {
-        this.symptCategory = symptCategory;
+    public void setSymptom(SymptomModel symptom) {
+        this.symptom = symptom;
     }
 }
