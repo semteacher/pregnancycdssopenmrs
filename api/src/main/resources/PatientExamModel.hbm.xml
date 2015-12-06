@@ -10,7 +10,7 @@
     <property name="examDate" type="java.util.Date" column="exam_date" length="19" />
     
     <many-to-one name="patientId" column="id_patient" class="org.openmrs.Patient" not-null="true" />
-    <many-to-one name="examUserId" column="id_user" class="org.openmrs.User" not-null="true" />
+    <many-to-one name="examUserId" column="id_examuser" class="org.openmrs.User" not-null="true" />
     
     <property name="groupName" type="java.lang.String" column="groupname" length="255" unique="false"/>
     <property name="authorized" type="org.hibernate.type.NumericBooleanType" column="authorized" unique="false"/>

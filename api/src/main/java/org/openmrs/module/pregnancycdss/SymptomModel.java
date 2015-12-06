@@ -30,11 +30,12 @@ public class SymptomModel extends BaseOpenmrsObject implements Serializable {
     private static final long serialVersionUID = 1L;
     //private static final Log log = LogFactory.getLog(SymptCategoryModel.class);
     protected final Log log = LogFactory.getLog(this.getClass());
+    
     private Integer symptId;
     private String symptName;
     private String symptNotes;
     private Integer idOrder;
-    private Integer isMulti;
+    private Boolean isMulti;
     private Boolean isSelected;
     private SymptCategoryModel symptCategory;
 
@@ -80,11 +81,11 @@ public class SymptomModel extends BaseOpenmrsObject implements Serializable {
         this.idOrder = idOrder;
     }
 
-    public Integer getIsMulti() {
+    public Boolean getIsMulti() {
         return isMulti;
     }
 
-    public void setIsMulti(Integer isMulti) {
+    public void setIsMulti(Boolean isMulti) {
         this.isMulti = isMulti;
     }
 

@@ -14,6 +14,6 @@
     <many-to-one name="symptCategory" class="SymptCategoryModel" column="id_category" not-null="true" />
     
     <property name="isMulti" type="org.hibernate.type.NumericBooleanType" column="is_multi" unique="false"/>
-    <property name="isSelected" type="org.hibernate.type.NumericBooleanType" column="is_selected" unique="false"/>
+    <property name="isSelected" type="org.hibernate.type.NumericBooleanType" column="is_selected" unique="false"/>    
   </class>
 </hibernate-mapping>

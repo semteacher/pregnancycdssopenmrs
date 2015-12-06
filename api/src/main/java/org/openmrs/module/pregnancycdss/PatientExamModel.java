@@ -24,9 +24,10 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private Integer activityId;
     private Integer encounterId;
     private Integer createUserId;
-    private Date createdate;
+    private Date createDate;
     private Short isFirstPregnancy;
-    private String expectDisease;
+    //private String expectDisease;
+    private String expectedDisease;
     private String diseasesList;
     private Integer finaldiseaseId;
     private String finalDisease;
@@ -115,12 +116,12 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.createUserId = createUserId;
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createdate) {
+        this.createDate = createdate;
     }
 
     public Short getIsFirstPregnancy() {
@@ -131,12 +132,12 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.isFirstPregnancy = isFirstPregnancy;
     }
 
-    public String getExpectDisease() {
-        return expectDisease;
+    public String getExpectedDisease() {
+        return expectedDisease;
     }
 
-    public void setExpectDisease(String expectDisease) {
-        this.expectDisease = expectDisease;
+    public void setExpectedDisease(String expectedDisease) {
+        this.expectedDisease = expectedDisease;
     }
 
     public String getDiseasesList() {
@@ -163,11 +164,11 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.finalDisease = finalDisease;
     }
 
-    public String getFinaldiseaseICD10() {
+    public String getFinalDiseaseICD10() {
         return finalDiseaseICD10;
     }
 
-    public void setFinaldiseaseICD10(String finalDiseaseICD10) {
+    public void setFinalDiseaseICD10(String finalDiseaseICD10) {
         this.finalDiseaseICD10 = finalDiseaseICD10;
     }
 
