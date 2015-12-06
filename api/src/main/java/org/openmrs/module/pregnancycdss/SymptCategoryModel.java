@@ -16,6 +16,8 @@
 package org.openmrs.module.pregnancycdss;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.BaseOpenmrsObject;
@@ -36,6 +38,15 @@ public class SymptCategoryModel extends BaseOpenmrsObject implements Serializabl
     private String catName;
     private String catNotes;
     private Boolean isSelected;
+    private List<SymptomModel> symptoms;
+
+    public List<SymptomModel> getSymptoms() {
+        return symptoms;
+    }
+
+    public void setSymptoms(List<SymptomModel> symptoms) {
+        this.symptoms = symptoms;
+    }
 
     public Integer getSymptCatId() {
         return symptCatId;

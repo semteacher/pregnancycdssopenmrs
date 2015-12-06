@@ -19,6 +19,13 @@
                     <c:choose>
                         <c:when test="${symptcategory.isSelected == true}">
                             <div>${symptcategory.catName}</div>
+                            <c:forEach var="symptom" items="${symptcategory.symptoms}">
+                                <c:choose>
+                                    <c:when test="${symptom.isSelected == true}">
+                                        <div>${symptom.symptName}</div>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
                         </c:when>
                     </c:choose>
                 </c:forEach>
