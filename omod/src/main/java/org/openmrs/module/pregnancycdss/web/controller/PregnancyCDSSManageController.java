@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
+import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 
 /**
@@ -59,6 +60,20 @@ public class PregnancyCDSSManageController {
         //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
         model.addAttribute("symptomslist", symptomslist);
         System.out.println("semteacher: 10000.2. completed symptomslist model variable: ok or not?...");
+        System.out.println(model.toString());
+    }
+
+    @RequestMapping(value = "/module/pregnancycdss/managesymptomoptions", method = RequestMethod.GET)
+    public void managesymptomoptions(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        log.debug("semteacher: 20000.0 Try to get symptomoptionslist from db: invoke service call...");
+        System.out.println("semteacher: 20000.0 Try to get symptomoptionslist from db: invoke service call...");
+        List<SymptomOptionModel> symptomoptionslist = Context.getService(pregnancycdssserviceService.class).getAllSymptOptions();
+        System.out.println("semteacher: 20000.1. Got symptomoptionslist from db: ok or not?...");
+        System.out.println(symptomoptionslist.get(0).getOptName());
+        //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
+        model.addAttribute("symptomoptionslist", symptomoptionslist);
+        System.out.println("semteacher: 20000.2. completed symptomoptionslist model variable: ok or not?...");
         System.out.println(model.toString());
     }
 
