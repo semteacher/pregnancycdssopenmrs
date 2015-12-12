@@ -7,6 +7,8 @@ package org.openmrs.module.pregnancycdss;
 import java.io.Serializable;
 import java.util.Date;
 import org.openmrs.BaseOpenmrsObject;
+import org.openmrs.Encounter;
+import org.openmrs.Patient;
 
 /**
  *
@@ -36,6 +38,16 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private String decisionTreeDiseasesList;
     private String decisionTreeImg;
     private String uuid;
+    private Patient patient;
+    private Encounter encounter;
+
+    public Encounter getEncounter() {
+        return encounter;
+    }
+
+    public void setEncounter(Encounter encounter) {
+        this.encounter = encounter;
+    }
 
     public PatientExamModel() {
     }
@@ -194,6 +206,14 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
 
     public void setDecisionTreeImg(String decisionTreeImg) {
         this.decisionTreeImg = decisionTreeImg;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     @Override

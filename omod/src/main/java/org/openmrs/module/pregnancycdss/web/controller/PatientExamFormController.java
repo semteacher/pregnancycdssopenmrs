@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
@@ -58,6 +59,12 @@ public class PatientExamFormController {
             model.put("symptcategorylist", symptcategorylist);
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
+            
+            PatientExamModel patientExamForm = null;
+            //patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
+            model.put("patientExamForm", patientExamForm);
+            System.out.println("semteacher: 1650. completed model variable: ok or not?...");
+            System.out.println(model.toString());            
             //model.put("Current encounter is:", Context.getUserContext().getLocation());
 //            if (request.getParameter("patientId") != null) {
 //                model.put("appointment", getAppointment(null, Integer.parseInt(request.getParameter("patientId"))));
