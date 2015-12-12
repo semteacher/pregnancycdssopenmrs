@@ -37,6 +37,7 @@
                 SymptomOptionModel.hbm.xml
                 DiseasesModel.hbm.xml
                 PatientExamModel.hbm.xml
+                PatientSymptByExamModel.hbm.xml
 		<!--pregnacycdssmodel.hbm.xml-->				
 	</mappingFiles>
 
