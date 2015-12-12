@@ -11,16 +11,16 @@
         <property name="symptNotes" type="java.lang.String" column="sympt_notes" length="100" unique="false"/>
         <property name="idOrder" type="java.lang.Integer" column="id_order" unique="false"/>
     
-        <many-to-one name="symptCategory" class="SymptCategoryModel" column="id_category" not-null="true" fetch="select" />
+        <many-to-one name="symptCategory" class="SymptCategoryModel" column="id_category" not-null="true" />
     
         <property name="isMulti" type="org.hibernate.type.NumericBooleanType" column="is_multi" unique="false"/>
         
         <property name="isSelected" type="org.hibernate.type.NumericBooleanType" column="is_selected" unique="false"/>    
-        <list name="symptOpt" table="form_pregnancycdss_sympt_options" inverse="false" cascade="all">
+        <list name="symptOpt" table="form_pregnancycdss_sympt_options">
             <key>
                 <column name="id_symptom" not-null="true"></column>
             </key>
-            <list-index column="id_order" />
+            <list-index column="sympt_opt_id" />
             <one-to-many class="SymptomOptionModel"/>
         </list>
     </class>

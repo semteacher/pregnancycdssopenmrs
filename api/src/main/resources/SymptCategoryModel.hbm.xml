@@ -10,7 +10,7 @@
         <property name="catName" type="java.lang.String" column="cat_name" length="100" unique="false"/>
         <property name="catNotes" type="java.lang.String" column="cat_notes" length="150" unique="false"/>
         <property name="isSelected" type="org.hibernate.type.NumericBooleanType" column="is_selected" unique="false"/>
-        <list name="symptoms" table="form_pregnancycdss_symptoms" inverse="false" cascade="all">
+        <list name="symptoms" table="form_pregnancycdss_symptoms">
             <key>
                 <column name="id_category" not-null="true"></column>
             </key>

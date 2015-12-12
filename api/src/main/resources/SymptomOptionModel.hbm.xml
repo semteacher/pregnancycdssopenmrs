@@ -7,7 +7,7 @@
         </id>
         <discriminator column="sympt_opt_id" insert="false" />
     
-        <many-to-one name="symptom" class="SymptomModel" column="id_symptom" not-null="true" fetch="select" />
+        <many-to-one name="symptom" class="SymptomModel" column="id_symptom" not-null="true" />
         
         <property name="optName" type="java.lang.String" column="opt_name" length="50" unique="false"/>
         <property name="idOrder" type="java.lang.Integer" column="id_order" unique="false"/>
