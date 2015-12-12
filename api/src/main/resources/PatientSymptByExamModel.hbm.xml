@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.openmrs.module.pregnancycdss">
+    <class name="PatientSymptomByExamModel" table="form_pregnancycdss_symptopt_by_patient">
+        <id name="symptPatientId" type="java.lang.Integer" column="sympt_pat_id" >
+            <generator class="native"/>
+        </id>
+        <discriminator column="sympt_pat_id" insert="false" />
+    
+        <property name="examId" type="java.lang.Integer" column="id_exam" unique="false"/>
+        <property name="patientId" type="java.lang.Integer" column="id_patient" unique="false"/>
+        <property name="examUserId" type="java.lang.Integer" column="id_examuser" unique="false"/>
+        <property name="symptomId" type="java.lang.Integer" column="id_symptom" unique="false"/>
+        <property name="symptOptId" type="java.lang.Integer" column="id_sympt_opt" unique="false"/>
+        <property name="symptCatId" type="java.lang.Integer" column="id_sympt_cat" unique="false"/>
+        <property name="diseaseId" type="java.lang.Integer" column="id_disease" unique="false"/>
+        <property name="py" type="java.lang.Float" column="py" unique="false"/>
+        <property name="pn" type="java.lang.Float" column="pn" unique="false"/>
+        <property name="idOrder" type="java.lang.Integer" column="id_order" unique="false"/>
+    </class>
+</hibernate-mapping>
