@@ -9,6 +9,7 @@ import java.util.Date;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
+import org.openmrs.User;
 
 /**
  *
@@ -19,13 +20,13 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private static final long serialVersionUID = 1L;
     private Integer examId;
     private Date examDate;
-    private Integer patientId;
-    private Integer examUserId;
+    private Patient patientId;
+    private User examUserId;
     private String groupName;
     private Integer authorized;
     private Integer activityId;
-    private Integer encounterId;
-    private Integer createUserId;
+    private Encounter encounterId;
+    private User createUserId;
     private Date createDate;
     private Short isFirstPregnancy;
     //private String expectDisease;
@@ -38,16 +39,6 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private String decisionTreeDiseasesList;
     private String decisionTreeImg;
     private String uuid;
-    private Patient patient;
-    private Encounter encounter;
-
-    public Encounter getEncounter() {
-        return encounter;
-    }
-
-    public void setEncounter(Encounter encounter) {
-        this.encounter = encounter;
-    }
 
     public PatientExamModel() {
     }
@@ -72,19 +63,19 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.examDate = examDate;
     }
 
-    public Integer getPatientId() {
+    public Patient getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(Integer patientId) {
+    public void setPatientId(Patient patientId) {
         this.patientId = patientId;
     }
 
-    public Integer getExamUserId() {
+    public User getExamUserId() {
         return examUserId;
     }
 
-    public void setExamUserId(Integer examUserId) {
+    public void setExamUserId(User examUserId) {
         this.examUserId = examUserId;
     }
 
@@ -112,19 +103,19 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.activityId = activityId;
     }
 
-    public Integer getEncounterId() {
+    public Encounter getEncounterId() {
         return encounterId;
     }
 
-    public void setEncounterId(Integer encounterId) {
+    public void setEncounterId(Encounter encounterId) {
         this.encounterId = encounterId;
     }
 
-    public Integer getCreateUserId() {
+    public User getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(Integer createUserId) {
+    public void setCreateUserId(User createUserId) {
         this.createUserId = createUserId;
     }
 
@@ -206,14 +197,6 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
 
     public void setDecisionTreeImg(String decisionTreeImg) {
         this.decisionTreeImg = decisionTreeImg;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
     }
 
     @Override

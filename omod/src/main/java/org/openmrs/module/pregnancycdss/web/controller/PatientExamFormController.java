@@ -6,6 +6,7 @@ package org.openmrs.module.pregnancycdss.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 
 
@@ -18,6 +19,7 @@ import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,4 +73,55 @@ public class PatientExamFormController {
 //            }
         }
     }
+    
+    	@RequestMapping(method = RequestMethod.POST)
+	public String onSubmit(HttpServletRequest request, PatientExamModel patientExamForm, BindingResult result ) throws Exception {
+		HttpSession httpSession = request.getSession();
+		
+		if (Context.isAuthenticated()) {
+			//AppointmentService appointmentService = Context.getService(AppointmentService.class);
+			
+			if (request.getParameter("save") != null) {
+                            System.out.println("semteacher: 1700. save reques ok...");
+				//new AppointmentValidator().validate(appointment, result);
+                            System.out.println("semteacher: 1710. request: "+request.toString());
+                            request.getParameterNames();
+			    //System.out.println("semteacher: 1720. request symptom_options: "+request.getParameter("symptom_options").toString());
+				if (result.hasErrors())
+					return null;
+				else {
+//					appointment.setDateCreated(new Date());
+//					if (flow != null) {
+//						appointment.setStatus(AppointmentStatus.WALKIN);
+//						//Start a new visit
+//						String visitTypeIdString = Context.getAdministrationService().getGlobalProperty(
+//						    AppointmentUtils.GP_DEFAULT_VISIT_TYPE);
+//						Integer visitTypeId = Integer.parseInt(visitTypeIdString);
+//						VisitType defaultVisitType = Context.getVisitService().getVisitType(visitTypeId);
+//						
+//						Visit visit = new Visit(appointment.getPatient(), defaultVisitType, new Date());
+//						visit.setLocation(appointment.getTimeSlot().getAppointmentBlock().getLocation());
+//						visit = Context.getVisitService().saveVisit(visit);
+//						appointment.setVisit(visit);
+//					} else
+//						appointment.setStatus(AppointmentStatus.SCHEDULED);
+//					appointmentService.saveAppointment(appointment);
+//					httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, "appointmentscheduling.Appointment.saved");
+//					//Check whether to redirect to appointments manage form (origin=null) or to patientDashboard (origin=dashboard)
+//					if (origin == null)
+//						return "redirect:appointmentList.list";
+//					else if (origin.equals("dashboard"))
+//						return "redirect:/patientDashboard.form?patientId=" + appointment.getPatient().getId().toString();
+//                                        
+                                        return null;
+				}
+			}
+//			if (request.getParameter("findAvailableTime") != null) {
+//				if (fromDate != null && toDate != null && !fromDate.before(toDate))
+//					result.rejectValue("timeSlot", "appointmentscheduling.Appointment.error.InvalidDateInterval");
+//			}
+		}
+		return null;
+	}
+        
 }

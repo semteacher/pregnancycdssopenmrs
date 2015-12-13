@@ -14,6 +14,9 @@
 
 <form:form modelAttribute="patientExamForm" method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
     <fieldset>
+        <input type="hidden" name="patientid" value="${patientId}" />
+        <input type="hidden" name="process" value="true" />
+        
         <table id="symptCatTable"class="display">
             <tbody>
                 <tr>
@@ -57,8 +60,7 @@
                 </tr>
             </tbody>
         </table>
-        <input type="button" class="saveButton" name="save" 
-               value="<spring:message code='pregnancycdss.patientExamForm.Edit.save'/>" />
+        <input type="submit" class="saveButton" name="save" value="<spring:message code='pregnancycdss.patientExamForm.Edit.save'/>" />        
     </fieldset>
 </form:form>
 
