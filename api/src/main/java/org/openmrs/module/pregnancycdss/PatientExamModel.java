@@ -6,6 +6,7 @@ package org.openmrs.module.pregnancycdss;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
@@ -39,8 +40,32 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private String decisionTreeDiseasesList;
     private String decisionTreeImg;
     private String uuid;
+    private List<PatientSymptomByExamModel> patientSymptoms = null;
 
     public PatientExamModel() {
+    }
+    
+        public PatientExamModel(Date examDate, User examUserId, Patient patientId, Encounter encounterId) {
+        this.examDate = examDate;
+        this.patientId = patientId;
+        this.examUserId = examUserId;
+        this.encounterId = encounterId;
+    }
+        
+    public PatientExamModel(Date examDate, Patient patientId, User examUserId, Encounter encounterId, List<PatientSymptomByExamModel> patientSymptoms) {
+        this.examDate = examDate;
+        this.patientId = patientId;
+        this.examUserId = examUserId;
+        this.encounterId = encounterId;
+        this.patientSymptoms = patientSymptoms;
+    }
+    
+    public List<PatientSymptomByExamModel> getPatientSymptoms() {
+        return patientSymptoms;
+    }
+
+    public void setPatientSymptoms(List<PatientSymptomByExamModel> patientSymptoms) {
+        this.patientSymptoms = patientSymptoms;
     }
 
     public PatientExamModel(Integer examId) {

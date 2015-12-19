@@ -4,6 +4,8 @@
  */
 package org.openmrs.module.pregnancycdss.web.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
+import org.openmrs.module.pregnancycdss.PatientSymptomByExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PatientExamFormController {
 
     protected final Log log = LogFactory.getLog(getClass());
+    private List<PatientSymptomByExamModel> patientSymptoms = new ArrayList<PatientSymptomByExamModel>();
 
     @RequestMapping(value = "/module/pregnancycdss/patientExamForm", method = RequestMethod.GET)
     public void showForm(ModelMap model, HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("patientId") Integer patientId) {
@@ -61,35 +65,45 @@ public class PatientExamFormController {
             model.put("symptcategorylist", symptcategorylist);
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
+
+            //PatientExamModel patientExamForm = null;
+            PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
             
-            PatientExamModel patientExamForm = null;
+            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
+            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
+            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
+            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
+            
+            patientExamForm.setPatientSymptoms(patientSymptoms);
+            
+            //patientExamForm.
             //patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
             model.put("patientExamForm", patientExamForm);
             System.out.println("semteacher: 1650. completed model variable: ok or not?...");
-            System.out.println(model.toString());            
+            System.out.println(model.toString());
             //model.put("Current encounter is:", Context.getUserContext().getLocation());
 //            if (request.getParameter("patientId") != null) {
 //                model.put("appointment", getAppointment(null, Integer.parseInt(request.getParameter("patientId"))));
 //            }
         }
     }
-    
-    	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(HttpServletRequest request, PatientExamModel patientExamForm, BindingResult result ) throws Exception {
-		HttpSession httpSession = request.getSession();
-		
-		if (Context.isAuthenticated()) {
-			//AppointmentService appointmentService = Context.getService(AppointmentService.class);
-			
-			if (request.getParameter("save") != null) {
-                            System.out.println("semteacher: 1700. save reques ok...");
-				//new AppointmentValidator().validate(appointment, result);
-                            System.out.println("semteacher: 1710. request: "+request.toString());
-                            request.getParameterNames();
-			    //System.out.println("semteacher: 1720. request symptom_options: "+request.getParameter("symptom_options").toString());
-				if (result.hasErrors())
-					return null;
-				else {
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String onSubmit(HttpServletRequest request, PatientExamModel patientExamForm, BindingResult result) throws Exception {
+        HttpSession httpSession = request.getSession();
+
+        if (Context.isAuthenticated()) {
+            //AppointmentService appointmentService = Context.getService(AppointmentService.class);
+
+            if (request.getParameter("save") != null) {
+                System.out.println("semteacher: 1700. save reques ok...");
+                //new AppointmentValidator().validate(appointment, result);
+                System.out.println("semteacher: 1710. request: " + request.toString());
+                request.getParameterNames();
+                //System.out.println("semteacher: 1720. request symptom_options: "+request.getParameter("symptom_options").toString());
+                if (result.hasErrors()) {
+                    return null;
+                } else {
 //					appointment.setDateCreated(new Date());
 //					if (flow != null) {
 //						appointment.setStatus(AppointmentStatus.WALKIN);
@@ -113,15 +127,14 @@ public class PatientExamFormController {
 //					else if (origin.equals("dashboard"))
 //						return "redirect:/patientDashboard.form?patientId=" + appointment.getPatient().getId().toString();
 //                                        
-                                        return null;
-				}
-			}
+                    return null;
+                }
+            }
 //			if (request.getParameter("findAvailableTime") != null) {
 //				if (fromDate != null && toDate != null && !fromDate.before(toDate))
 //					result.rejectValue("timeSlot", "appointmentscheduling.Appointment.error.InvalidDateInterval");
 //			}
-		}
-		return null;
-	}
-        
+        }
+        return null;
+    }
 }

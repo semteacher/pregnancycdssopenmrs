@@ -15,23 +15,40 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
 
     private static final long serialVersionUID = 1L;
     private Integer symptPatientId;
-    private Integer examId;
+    //private Integer examId;
+    private PatientExamModel patientExam;
     private Integer patientId;
     private Integer examUserId;
     private Integer symptomId;
     private Integer symptOptId;
     private Integer symptCatId;
-    private Integer diseaseId;
-    private Float py;
-    private Float pn;
-    private Integer idOrder;
+    private Integer diseaseId = null;
+    private Float py = null;
+    private Float pn = null;
+    private Integer idOrder = null;
     private String uuid;
 
     public PatientSymptomByExamModel() {
     }
 
-    public PatientSymptomByExamModel(Integer symptPatientId) {
-        this.symptPatientId = symptPatientId;
+    public PatientSymptomByExamModel(PatientExamModel patientExam, Integer patientId, Integer examUserId, Integer symptCatId, Integer symptomId, Integer symptOptId) {
+        this.patientExam = patientExam;
+        this.patientId = patientId;
+        this.examUserId = examUserId;
+        this.symptomId = symptomId;
+        this.symptOptId = symptOptId;
+        this.symptCatId = symptCatId;
+    }
+
+//    public PatientSymptomByExamModel(Integer symptPatientId) {
+//        this.symptPatientId = symptPatientId;
+//    }
+    public PatientExamModel getPatientExam() {
+        return patientExam;
+    }
+
+    public void setPatientExam(PatientExamModel patientExam) {
+        this.patientExam = patientExam;
     }
 
     public Integer getSymptPatientId() {
@@ -42,14 +59,13 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
         this.symptPatientId = symptPatientId;
     }
 
-    public Integer getExamId() {
-        return examId;
-    }
-
-    public void setExamId(Integer examId) {
-        this.examId = examId;
-    }
-
+//    public Integer getExamId() {
+//        return examId;
+//    }
+//
+//    public void setExamId(Integer examId) {
+//        this.examId = examId;
+//    }
     public Integer getPatientId() {
         return patientId;
     }
@@ -125,7 +141,7 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (examId != null ? examId.hashCode() : 0);
+        hash += (symptPatientId != null ? symptPatientId.hashCode() : 0);
         return hash;
     }
 
@@ -136,7 +152,7 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
             return false;
         }
         PatientSymptomByExamModel other = (PatientSymptomByExamModel) object;
-        if ((this.examId == null && other.examId != null) || (this.examId != null && !this.examId.equals(other.examId))) {
+        if ((this.symptPatientId == null && other.symptPatientId != null) || (this.symptPatientId != null && !this.symptPatientId.equals(other.symptPatientId))) {
             return false;
         }
         return true;
@@ -144,17 +160,17 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
 
     @Override
     public String toString() {
-        return "org.openmrs.module.pregnancycdss.PatientExamModel[ examId=" + examId + " ]";
+        return "org.openmrs.module.pregnancycdss.PatientSymptomByExamModel[ symptPatientId=" + symptPatientId + " ]";
     }
 
     @Override
     public Integer getId() {
-        return getExamId();
+        return getSymptPatientId();
     }
 
     @Override
     public void setId(Integer id) {
-        setExamId(id);
+        setSymptPatientId(id);
     }
 
     @Override

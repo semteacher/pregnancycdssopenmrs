@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="org.openmrs.module.pregnancycdss">
-  <class name="PatientExamModel" table="form_pregnancycdss_patient_exam">
-    <id name="examId" type="java.lang.Integer" column="exam_id" unsaved-value="2">
-      <generator class="native"/>
-    </id>
-    <discriminator column="exam_id" insert="false" />
+    <class name="PatientExamModel" table="form_pregnancycdss_patient_exam">
+        <id name="examId" type="java.lang.Integer" column="exam_id" unsaved-value="2">
+            <generator class="native"/>
+        </id>
+        <discriminator column="exam_id" insert="false" />
     
-    <property name="examDate" type="java.util.Date" column="exam_date" length="19" />
+        <property name="examDate" type="java.util.Date" column="exam_date" length="19" />
     
-    <many-to-one name="patientId" column="id_patient" class="org.openmrs.Patient" not-null="true" />
-    <many-to-one name="examUserId" column="id_examuser" class="org.openmrs.User" not-null="true" />
+        <many-to-one name="patientId" column="id_patient" class="org.openmrs.Patient" not-null="true" />
+        <many-to-one name="examUserId" column="id_examuser" class="org.openmrs.User" not-null="true" />
     
-    <property name="groupName" type="java.lang.String" column="groupname" length="255" unique="false"/>
-    <property name="authorized" type="org.hibernate.type.NumericBooleanType" column="authorized" unique="false"/>
-    <property name="activityId" type="java.lang.Integer" column="id_activity" unique="false"/>
+        <property name="groupName" type="java.lang.String" column="groupname" length="255" unique="false"/>
+        <property name="authorized" type="org.hibernate.type.NumericBooleanType" column="authorized" unique="false"/>
+        <property name="activityId" type="java.lang.Integer" column="id_activity" unique="false"/>
     
-    <many-to-one name="encounterId" column="id_encounter" class="org.openmrs.Encounter" not-null="true" />
-    <many-to-one name="createUserId" column="id_createuser" class="org.openmrs.User" not-null="true" />
+        <many-to-one name="encounterId" column="id_encounter" class="org.openmrs.Encounter" not-null="true" />
+        <many-to-one name="createUserId" column="id_createuser" class="org.openmrs.User" not-null="true" />
     
-    <property name="createDate" type="java.util.Date" column="createdate" length="19" />
-    <property name="isFirstPregnancy" type="org.hibernate.type.NumericBooleanType" column="is_firstpregnancy" unique="false"/>
-    <property name="expectedDisease" type="java.lang.String" column="expect_disease" length="255" unique="false"/>
-    <property name="diseasesList" type="java.lang.String" column="diseases" length="65535" unique="false"/>
-    <property name="finaldiseaseId" type="java.lang.Integer" column="id_finaldisease" unique="false"/>
-    <property name="finalDisease" type="java.lang.String" column="finaldisease" length="255" unique="false"/>
-    <property name="finalDiseaseICD10" type="java.lang.String" column="finaldisease_icd10" length="255" unique="false"/>
-    <property name="decisionTreeDiseaseId" type="java.lang.Integer" column="id_decisiontree_decease" unique="false"/>
-    <property name="decisionTreeDiseasesList" type="java.lang.String" column="diseases_tree" length="65535" unique="false"/>
-    <property name="decisionTreeImg" type="java.lang.String" column="decisiontree_img" length="65535" unique="false"/>    
+        <property name="createDate" type="java.util.Date" column="createdate" length="19" />
+        <property name="isFirstPregnancy" type="org.hibernate.type.NumericBooleanType" column="is_firstpregnancy" unique="false"/>
+        <property name="expectedDisease" type="java.lang.String" column="expect_disease" length="255" unique="false"/>
+        <property name="diseasesList" type="java.lang.String" column="diseases" length="65535" unique="false"/>
+        <property name="finaldiseaseId" type="java.lang.Integer" column="id_finaldisease" unique="false"/>
+        <property name="finalDisease" type="java.lang.String" column="finaldisease" length="255" unique="false"/>
+        <property name="finalDiseaseICD10" type="java.lang.String" column="finaldisease_icd10" length="255" unique="false"/>
+        <property name="decisionTreeDiseaseId" type="java.lang.Integer" column="id_decisiontree_decease" unique="false"/>
+        <property name="decisionTreeDiseasesList" type="java.lang.String" column="diseases_tree" length="65535" unique="false"/>
+        <property name="decisionTreeImg" type="java.lang.String" column="decisiontree_img" length="65535" unique="false"/>    
     
-    <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true" />
-  </class>
+        <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true" />
+    
+        <list name="patientSymptoms" table="form_pregnancycdss_patient_exam">
+            <key>
+                <column name="id_exam" not-null="true"></column>
+            </key>
+            <list-index column="sympt_pat_id" />
+            <one-to-many class="PatientSymptomByExamModel"/>
+        </list>
+    </class>
 </hibernate-mapping>

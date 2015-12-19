@@ -7,7 +7,8 @@
         </id>
         <discriminator column="sympt_pat_id" insert="false" />
     
-        <property name="examId" type="java.lang.Integer" column="id_exam" unique="false"/>
+        <many-to-one name="patientExam" class="PatientExamModel" column="id_exam" not-null="true" />
+        
         <property name="patientId" type="java.lang.Integer" column="id_patient" unique="false"/>
         <property name="examUserId" type="java.lang.Integer" column="id_examuser" unique="false"/>
         <property name="symptomId" type="java.lang.Integer" column="id_symptom" unique="false"/>
