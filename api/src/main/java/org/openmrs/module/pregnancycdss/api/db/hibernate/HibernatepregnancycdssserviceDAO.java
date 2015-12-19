@@ -168,7 +168,8 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
     @Transactional
     public PatientExamModel savePatientExam(PatientExamModel patientExam) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(patientExam);
+        //session.saveOrUpdate(patientExam);
+        session.persist(patientExam);
         return patientExam;
         //throw new UnsupportedOperationException("Not supported yet.");
     }

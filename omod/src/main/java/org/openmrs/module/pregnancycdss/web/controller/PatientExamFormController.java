@@ -77,11 +77,13 @@ public class PatientExamFormController {
             patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
             
             patientSymptoms1.clear();
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 2));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 7));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 11));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 14));
             
+            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+            patientExamForm.setPatientSymptoms(patientSymptoms1);
             Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
             patientExamForm.setPatientSymptoms(patientSymptoms);
             
