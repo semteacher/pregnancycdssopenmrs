@@ -35,4 +35,6 @@ public interface pregnancycdssserviceDAO {
     public List<SymptomModel> getAllSymptoms();
 
     public List<SymptomOptionModel> getAllSymptOptions();
+    
+    public PatientExamModel savePatientExam(PatientExamModel patientExam);
 }

@@ -23,6 +23,7 @@ import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * It is a default implementation of {@link pregnancycdssserviceService}.
@@ -86,9 +87,17 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
 
     @Override
     public List<SymptomOptionModel> getAllSymptOptions() throws APIException {
-                System.out.println("semteacher: 20000. Calling dao from service...");
+        System.out.println("semteacher: 20000. Calling dao from service...");
         log.debug("semteacher: 20000. Calling dao from service...");
         return getDao().getAllSymptOptions();
         //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    @Transactional
+    public PatientExamModel savePatientExam(PatientExamModel patientExam) throws APIException {
+        //throw new UnsupportedOperationException("Not supported yet.");
+        //ValidateUtil.validate(appointmentType);
+        return (PatientExamModel) getDao().savePatientExam(patientExam);
     }
 }

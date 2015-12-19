@@ -31,6 +31,14 @@ public class PatientSymptomByExamModel extends BaseOpenmrsObject implements Seri
     public PatientSymptomByExamModel() {
     }
 
+    public PatientSymptomByExamModel(Integer patientId, Integer examUserId, Integer symptCatId, Integer symptomId, Integer symptOptId) {
+        this.patientId = patientId;
+        this.examUserId = examUserId;
+        this.symptomId = symptomId;
+        this.symptOptId = symptOptId;
+        this.symptCatId = symptCatId;
+    }
+
     public PatientSymptomByExamModel(PatientExamModel patientExam, Integer patientId, Integer examUserId, Integer symptCatId, Integer symptomId, Integer symptOptId) {
         this.patientExam = patientExam;
         this.patientId = patientId;

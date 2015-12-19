@@ -36,6 +36,7 @@ public class PatientExamFormController {
 
     protected final Log log = LogFactory.getLog(getClass());
     private List<PatientSymptomByExamModel> patientSymptoms = new ArrayList<PatientSymptomByExamModel>();
+    private List<PatientSymptomByExamModel> patientSymptoms1 = new ArrayList<PatientSymptomByExamModel>();
 
     @RequestMapping(value = "/module/pregnancycdss/patientExamForm", method = RequestMethod.GET)
     public void showForm(ModelMap model, HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("patientId") Integer patientId) {
@@ -67,13 +68,21 @@ public class PatientExamFormController {
             System.out.println(model.toString());
 
             //PatientExamModel patientExamForm = null;
+            //texting
             PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
-            
+            patientSymptoms.clear();
             patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
             patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
             patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
             patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
             
+            patientSymptoms1.clear();
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
+            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
+            
+            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
             patientExamForm.setPatientSymptoms(patientSymptoms);
             
             //patientExamForm.

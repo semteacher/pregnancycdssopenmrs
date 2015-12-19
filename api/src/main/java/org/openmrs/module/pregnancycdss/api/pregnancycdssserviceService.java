@@ -47,5 +47,19 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     public List<PatientExamModel> getAllPatientExamForms() throws APIException;
     
     public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
+    
+    	/**
+	 * Creates or updates the given appointment type in the database.
+	 * 
+	 * @param appointmentType the appointment type to create or update.
+	 * @return the created or updated appointment type.
+	 * @should save new appointment type
+	 * @should save edited appointment type
+     * @should save confidential appointment type
+	 * @should throw error when name is null
+	 * @should throw error when name is empty string
+	 */
+    PatientExamModel savePatientExam(PatientExamModel patientExam)
+			throws APIException;
 
 }

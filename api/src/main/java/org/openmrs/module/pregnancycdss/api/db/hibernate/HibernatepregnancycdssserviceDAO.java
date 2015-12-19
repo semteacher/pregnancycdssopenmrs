@@ -24,6 +24,7 @@ import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.db.pregnancycdssserviceDAO;
+import org.springframework.transaction.annotation.Transactional;
 //import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -161,5 +162,14 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
 
 
         return patientexamform;
+    }
+
+    @Override
+    @Transactional
+    public PatientExamModel savePatientExam(PatientExamModel patientExam) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(patientExam);
+        return patientExam;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }
