@@ -144,7 +144,7 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         log.debug("semteacher: 1320. dao-callin data succesfull? record count:" + patientexamformslist.size());
         System.out.println("semteacher: 400. dao-callin data succesfull? record count=" + patientexamformslist.size());
 
-        PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId.toString())).uniqueResult();
+        PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId)).uniqueResult();
         System.out.println("semteacher: 1350. test data: " + patientexamform.toString());
         //cr.add(Restrictions.eq("salary", 2000));
 //        PatientExamModel patientexamform = (PatientExamModel) session.createQuery("from "+PatientExamModel.class.getSimpleName()+" AS pem WHERE pem.encounterId = :encounterId").setParameter("encounterId", EncouterId).uniqueResult();

@@ -18,5 +18,6 @@
         <property name="py" type="java.lang.Float" column="py" unique="false"/>
         <property name="pn" type="java.lang.Float" column="pn" unique="false"/>
         <property name="idOrder" type="java.lang.Integer" column="id_order" unique="false"/>
+        <property name="uuid" type="java.lang.String" column="uuid" length="38" unique="true" />
     </class>
 </hibernate-mapping>
