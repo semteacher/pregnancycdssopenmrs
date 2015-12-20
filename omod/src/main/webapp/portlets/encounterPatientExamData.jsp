@@ -10,12 +10,7 @@
     } );
 </script>
 
-<p>encounterId=${encounter.encounterId}</p>
-<p>patientId=${encounter.patient.patientId}</p>
-<p>All Encounter Data=${encounter}</p>
-<p>model test - patient data: ${model.patientdata}</p>
-<p>model test - patient form data: ${model.patientexamform}</p>
-<p>The current patient Pregnancy Exam Form data shown below:</p>
+<p>encounterId=${encounter.encounterId} patientId=${encounter.patient.patientId}</p>
 
 <div id="ptientExamTable">
     <table id="patientexamformslistTable"class="display">

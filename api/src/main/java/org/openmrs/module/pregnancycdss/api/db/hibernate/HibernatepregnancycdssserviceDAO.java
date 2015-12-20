@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
@@ -133,21 +134,21 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
 
     @Override
     //@Transactional(readOnly = true)
-    public PatientExamModel getPatientExamByEncouter(Integer EncouterId) {
+    public List<PatientExamModel> getPatientExamByEncouter(Encounter encounter) {
         System.out.println("semteacher: 1200. dao-getting session...");
         log.debug("semteacher: 1200. dao-getting session...");
         Session session = sessionFactory.getCurrentSession();
-        System.out.println("semteacher: 1300. dao-begin callin data ... encounter ID=" + EncouterId.toString());
+        System.out.println("semteacher: 1300. dao-begin callin data ... encounter ID=" + encounter.getEncounterId().toString());
         log.debug("semteacher: 1300. dao-begin callin data ...");
         SymptCategoryModel symptcategoryone = (SymptCategoryModel) session.createCriteria(SymptCategoryModel.class).add(Restrictions.eq("symptCatId", 1)).uniqueResult();
         System.out.println("semteacher: 1310. test data: " + symptcategoryone.toString());
-        List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
-        log.debug("semteacher: 1320. dao-callin data succesfull? record count:" + patientexamformslist.size());
-        System.out.println("semteacher: 400. dao-callin data succesfull? record count=" + patientexamformslist.size());
+        //List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).list();
+        //log.debug("semteacher: 1320. dao-callin data succesfull? record count:" + patientexamformslist.size());
+        //System.out.println("semteacher: 400. dao-callin data succesfull? record count=" + patientexamformslist.size());
 
         //PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId)).uniqueResult();
-        PatientExamModel patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", EncouterId)).uniqueResult();
-        System.out.println("semteacher: 1350. test data: " + patientexamform.toString());
+        List<PatientExamModel> patientexamformslist = session.createCriteria(PatientExamModel.class).add(Restrictions.eq("encounterId", encounter)).list();
+        System.out.println("semteacher: 1350. test data: " + patientexamformslist.toString());
         //cr.add(Restrictions.eq("salary", 2000));
 //        PatientExamModel patientexamform = (PatientExamModel) session.createQuery("from "+PatientExamModel.class.getSimpleName()+" AS pem WHERE pem.encounterId = :encounterId").setParameter("encounterId", EncouterId).uniqueResult();
 //        
@@ -163,7 +164,7 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
 //	}
 
 
-        return patientexamform;
+        return patientexamformslist;
     }
 
     @Override

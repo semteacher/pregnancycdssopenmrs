@@ -12,6 +12,7 @@
 package org.openmrs.module.pregnancycdss.api.db;
 
 import java.util.List;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
@@ -31,7 +32,7 @@ public interface pregnancycdssserviceDAO {
 
     public List<PatientExamModel> getAllPatientExamForms();
 
-    public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
+    public List<PatientExamModel> getPatientExamByEncouter(Encounter encounter);
 
     public List<SymptomModel> getAllSymptoms();
 

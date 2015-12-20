@@ -16,6 +16,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Encounter;
 import org.openmrs.api.APIException;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
@@ -80,10 +81,10 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
     }
 
     @Override
-    public PatientExamModel getPatientExamByEncouter(Integer EncouterId) throws APIException {
+    public List<PatientExamModel> getPatientExamByEncouter(Encounter encounter) throws APIException {
         System.out.println("semteacher: 1010. Calling dao from service...");
         log.debug("semteacher: 1010. Calling dao from service...");
-        return getDao().getPatientExamByEncouter(EncouterId);
+        return getDao().getPatientExamByEncouter(encounter);
     }
 
     @Override
