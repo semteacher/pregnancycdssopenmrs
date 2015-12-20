@@ -52,7 +52,7 @@ public class EncounterPatientExamDataPortletController extends PortletController
             
             //PatientExamModel patientexamform = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(EncounterId);
             model.put("patientexamform", "Patient Form Data Currently does not Mapped properly - the Hibernate error occurd!");
-            List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getAllPatientExamForms();
+            List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getPatientExamByPatient(e.getPatient());
             model.put("patientexamformslist", patientexamformslist);
         }        
         

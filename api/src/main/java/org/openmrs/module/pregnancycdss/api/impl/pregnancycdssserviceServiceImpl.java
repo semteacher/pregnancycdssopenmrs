@@ -12,6 +12,7 @@
 package org.openmrs.module.pregnancycdss.api.impl;
 
 import java.util.List;
+import org.openmrs.Patient;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -99,5 +100,12 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         //throw new UnsupportedOperationException("Not supported yet.");
         //ValidateUtil.validate(appointmentType);
         return (PatientExamModel) getDao().savePatientExam(patientExam);
+    }
+
+    @Override
+    public List<PatientExamModel> getPatientExamByPatient(Patient patient) {
+        System.out.println("semteacher: 1020. Calling dao from service...");
+        log.debug("semteacher: 1020. Calling dao from service...");
+        return getDao().getPatientExamByPatient(patient);
     }
 }

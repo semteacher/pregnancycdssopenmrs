@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.openmrs.Patient;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
@@ -173,5 +174,15 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         session.persist(patientExam);
         return patientExam;
         //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<PatientExamModel> getPatientExamByPatient(Patient patient) {
+        System.out.println("semteacher: 1400. dao-getting session...");
+        log.debug("semteacher: 1400. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        List<PatientExamModel> patientexamformlist = null;
+        patientexamformlist = session.createCriteria(PatientExamModel.class).add(Restrictions.eq("patientId", patient)).list();
+        return patientexamformlist;
     }
 }

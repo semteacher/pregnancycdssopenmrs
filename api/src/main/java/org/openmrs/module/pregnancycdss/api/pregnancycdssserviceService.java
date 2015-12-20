@@ -14,6 +14,7 @@
 package org.openmrs.module.pregnancycdss.api;
 
 import java.util.List;
+import org.openmrs.Patient;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
@@ -47,7 +48,7 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     public List<PatientExamModel> getAllPatientExamForms() throws APIException;
     
     public PatientExamModel getPatientExamByEncouter(Integer EncouterId);
-    
+    public List<PatientExamModel> getPatientExamByPatient(Patient patient);
     	/**
 	 * Creates or updates the given appointment type in the database.
 	 * 

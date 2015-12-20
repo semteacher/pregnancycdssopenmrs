@@ -50,6 +50,6 @@ public class PregnancyCDSSEncounterForm extends org.openmrs.module.web.extension
     public String getContent() {
         //throw new UnsupportedOperationException("Not supported yet.");
         System.out.println("1000: PregnancyCDSSEncounterForm: return content of box into the encounter ");
-        return "Semteacher: Pregnancy Exam Form data about the current patient the will be there!";
+        return "Pregnancy Exam Form data for the current patient is there";
     }
 }
