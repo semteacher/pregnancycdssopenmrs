@@ -4,6 +4,7 @@
  */
 package org.openmrs.module.pregnancycdss.web.controller;
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.openmrs.web.controller.PortletController;
@@ -51,6 +52,8 @@ public class EncounterPatientExamDataPortletController extends PortletController
             
             //PatientExamModel patientexamform = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(EncounterId);
             model.put("patientexamform", "Patient Form Data Currently does not Mapped properly - the Hibernate error occurd!");
+            List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getAllPatientExamForms();
+            model.put("patientexamformslist", patientexamformslist);
         }        
         
 // your code here

@@ -23,8 +23,7 @@
             <th>Exam Date</th>
             <th>Patient ID</th>
             <th>Encounter ID</th>
-            <th>Create Date</th>
-            <th>Patient ID</th>
+            <th>Create Date</th>            
             <th>First Pregnancy</th>
             <th>Expected Disease</th>
             <th>Final Disease</th>
@@ -35,10 +34,19 @@
             <tr>
                 <td>${patientexamform.examId}</td>
                 <td>${patientexamform.examDate}</td>
-                <td>${patientexamform.patientId}</td>
+                <td>${patientexamform.patientId.familyName}</td>
                 <td>${patientexamform.encounterId}</td>
                 <td>${patientexamform.createDate}</td>
-                <td>${patientexamform.isFirstPregnancy}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${patientexamformlst.isFirstPregnancy == true}">
+                            Yes
+                        </c:when>
+                        <c:otherwise>
+                            No
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${patientexamform.expectedDisease}</td>
                 <td>${patientexamform.finalDisease}</td>
             </tr>

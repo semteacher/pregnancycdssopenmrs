@@ -67,28 +67,25 @@ public class PatientExamFormController {
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
 
-            //PatientExamModel patientExamForm = null;
+            PatientExamModel patientExamForm = new PatientExamModel();
             //texting
-            PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
-            patientSymptoms.clear();
-            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
-            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
-            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
-            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
-            
-            patientSymptoms1.clear();
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 2));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 7));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 11));
-            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 14));
-            
-            //Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
-            patientExamForm.setPatientSymptoms(patientSymptoms);
-            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
-            //patientExamForm.setPatientSymptoms(patientSymptoms1);
-            
-            //patientExamForm.
-            //patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
+//            PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
+//            patientSymptoms.clear();
+//            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 3));
+//            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 8));
+//            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 12));
+//            patientSymptoms.add(new PatientSymptomByExamModel(patientExamForm, pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 13));
+//            
+//            patientSymptoms1.clear();
+//            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 1, 2));
+//            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 2, 7));
+//            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 3, 11));
+//            patientSymptoms1.add(new PatientSymptomByExamModel(pat.getId(), Context.getAuthenticatedUser().getUserId(), 1, 4, 14));
+//                        
+//            patientExamForm.setPatientSymptoms(patientSymptoms);
+//            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+
+            ///patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
             model.put("patientExamForm", patientExamForm);
             System.out.println("semteacher: 1650. completed model variable: ok or not?...");
             System.out.println(model.toString());

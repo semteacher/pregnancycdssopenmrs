@@ -29,7 +29,7 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     private Encounter encounterId;
     private User createUserId;
     private Date createDate;
-    private Short isFirstPregnancy;
+    private Boolean isFirstPregnancy;
     //private String expectDisease;
     private String expectedDisease;
     private String diseasesList;
@@ -152,11 +152,11 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.createDate = createdate;
     }
 
-    public Short getIsFirstPregnancy() {
+    public Boolean getIsFirstPregnancy() {
         return isFirstPregnancy;
     }
 
-    public void setIsFirstPregnancy(Short isFirstPregnancy) {
+    public void setIsFirstPregnancy(Boolean isFirstPregnancy) {
         this.isFirstPregnancy = isFirstPregnancy;
     }
 
