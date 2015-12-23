@@ -109,4 +109,11 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         log.debug("semteacher: 1020. Calling dao from service...");
         return getDao().getPatientExamByPatient(patient);
     }
+
+    @Override
+    public PatientExamModel getPatientExamById(Integer patientExamFormId) {
+        System.out.println("semteacher: 1020. Calling dao from service...");
+        log.debug("semteacher: 1020. Calling dao from service...");
+        return getDao().getPatientExamById(patientExamFormId);
+    }
 }

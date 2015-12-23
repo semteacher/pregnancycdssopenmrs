@@ -186,4 +186,13 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         patientexamformlist = session.createCriteria(PatientExamModel.class).add(Restrictions.eq("patientId", patient)).list();
         return patientexamformlist;
     }
+
+    @Override
+    public PatientExamModel getPatientExamById(Integer patientExamFormId) {
+        log.debug("semteacher: 1500. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        PatientExamModel patientexamform = null;
+        patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("examId", patientExamFormId)).uniqueResult();
+        return patientexamform;        
+    }
 }

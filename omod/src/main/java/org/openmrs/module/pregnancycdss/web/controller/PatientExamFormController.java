@@ -39,7 +39,7 @@ public class PatientExamFormController {
     private List<PatientSymptomByExamModel> patientSymptoms1 = new ArrayList<PatientSymptomByExamModel>();
 
     @RequestMapping(value = "/module/pregnancycdss/patientExamForm", method = RequestMethod.GET)
-    public void showForm(ModelMap model, HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("patientId") Integer patientId) {
+    public void showForm(ModelMap model, HttpServletRequest request, @RequestParam("patientExamFormId") Integer patientExamFormId, @RequestParam("encounterId") Integer encounterId, @RequestParam("patientId") Integer patientId) {
         if (Context.isAuthenticated()) {
 //            Object oe = request.getAttribute("org.openmrs.portlet.encounterId");
 //            Encounter e = null;
@@ -66,8 +66,15 @@ public class PatientExamFormController {
             model.put("symptcategorylist", symptcategorylist);
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
-
-            PatientExamModel patientExamForm = new PatientExamModel();
+            
+            PatientExamModel patientExamForm = null;
+            
+            if (patientExamFormId != null) {
+                patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(patientExamFormId);
+                
+            } else {
+                //PatientExamModel patientExamForm = new PatientExamModel();
+            }
             //texting
 //            PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
 //            patientSymptoms.clear();

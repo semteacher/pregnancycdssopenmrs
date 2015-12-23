@@ -24,6 +24,8 @@
                 <th>First Pregnancy</th>
                 <th>Expected Disease</th>
                 <th>Final Disease</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +48,28 @@
                     </td>
                     <td>${patientexamformlst.expectedDisease}</td>
                     <td>${patientexamformlst.finalDisease}</td>
+                    <td>
+                        <div id="addPtientExamForm">
+                            <openmrs:hasPrivilege privilege="Add Observations">
+                                <div>
+                                    <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.form?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
+                                        link: <spring:message code="pregnancycdss.patientExamForm.Delete.form"/>
+                                    </a>
+                                </div>
+                            </openmrs:hasPrivilege>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="addPtientExamForm">
+                            <openmrs:hasPrivilege privilege="Add Observations">
+                                <div>
+                                    <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.form?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
+                                        link: <spring:message code="pregnancycdss.patientExamForm.Edit.open"/>
+                                    </a>
+                                </div>
+                            </openmrs:hasPrivilege>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -55,8 +79,8 @@
 <div id="addPtientExamForm">
     <openmrs:hasPrivilege privilege="Add Observations">
         <div>
-            <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.form?encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
-                link: <spring:message code="pregnancycdss.managepatientexams"/>
+            <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.form?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
+                link: <spring:message code="pregnancycdss.patientExamForm.New.form"/>
             </a>
         </div>
     </openmrs:hasPrivilege>

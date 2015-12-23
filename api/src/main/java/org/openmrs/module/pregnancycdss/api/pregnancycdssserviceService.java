@@ -63,5 +63,5 @@ public interface pregnancycdssserviceService extends OpenmrsService {
 	 */
     PatientExamModel savePatientExam(PatientExamModel patientExam)
 			throws APIException;
-
+    PatientExamModel getPatientExamById(Integer patientExamFormId);
 }

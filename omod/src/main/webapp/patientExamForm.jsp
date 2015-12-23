@@ -10,11 +10,14 @@
 <p>All Encounter Data=${encounerdata}</p>
 <p>model test - patient data: ${patientdata}</p>
 <p>model test - patient form data: ${patientexamform}</p>
+<p>model test - form id: ${patientExamForm.examId}</p>
 <p>${symptcategorylist}</p>
 
 <form:form modelAttribute="patientExamForm" method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
     <fieldset>
         <input type="hidden" name="patientid" value="${patientId}" />
+        <input type="hidden" name="patientid" value="${encounterId}" />
+        <input type="hidden" name="patientid" value="${patientExamForm.examId}" />
         <input type="hidden" name="process" value="true" />
         
         <table id="symptCatTable"class="display">

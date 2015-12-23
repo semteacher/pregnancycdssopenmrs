@@ -41,4 +41,6 @@ public interface pregnancycdssserviceDAO {
     public PatientExamModel savePatientExam(PatientExamModel patientExam);
 
     public List<PatientExamModel> getPatientExamByPatient(Patient patient);
+
+    public PatientExamModel getPatientExamById(Integer patientExamFormId);
 }
