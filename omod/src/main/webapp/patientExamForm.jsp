@@ -11,7 +11,6 @@
 <p>model test - patient data: ${patientdata}</p>
 <p>model test - patient form data: ${patientexamform}</p>
 <p>model test - form id: ${patientExamForm.examId}</p>
-<p>${symptcategorylist}</p>
 
 <form:form modelAttribute="patientExamForm" method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
     <fieldset>
@@ -45,8 +44,16 @@
                                                                             <c:otherwise>
                                                                                 <c:set var="sel_type" scope="page" value="radio"/>
                                                                             </c:otherwise>
+                                                                        </c:choose>                                                                        
+                                                                        <c:choose>
+                                                                            <c:when test="${patientExamForm.patientSymptoms[symptomOption.symptOptId].symptOptId == symptomOption.symptOptId}">
+                                                                                <c:set var="sel_status" scope="page" value="checked"/>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <c:set var="sel_status" scope="page" value=""/>
+                                                                            </c:otherwise>
                                                                         </c:choose>
-                                                                        <span class="formtext"><input type="${sel_type}" id="${symptomOption.symptOptId}" name="symptom_options[${symptom.symptId}][]" value="${symptomOption.symptOptId}" />${symptomOption.optName}</span>
+                                                                        <span class="formtext"><input type="${sel_type}" id="${symptomOption.symptOptId}" name="symptom_options[${symptom.symptId}][]" value="${symptomOption.symptOptId}" ${sel_status} />${symptomOption.optName}</span>
                                                                     </div>
                                                                 </c:when>
                                                             </c:choose>

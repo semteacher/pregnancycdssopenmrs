@@ -36,7 +36,7 @@
             <key>
                 <column name="id_exam" not-null="true"></column>
             </key>
-            <list-index column="sympt_pat_id" />
+            <list-index column="id_sympt_opt" />
             <one-to-many class="PatientSymptomByExamModel"/>
         </list>
     </class>

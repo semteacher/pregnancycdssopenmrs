@@ -93,6 +93,8 @@ public class PatientExamFormController {
 //            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
 
             ///patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
+            PatientSymptomByExamModel testsymptopt = patientExamForm.getPatientSymptoms().get(3);
+
             model.put("patientExamForm", patientExamForm);
             System.out.println("semteacher: 1650. completed model variable: ok or not?...");
             System.out.println(model.toString());
