@@ -7,6 +7,7 @@ package org.openmrs.module.pregnancycdss.web.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -66,12 +67,12 @@ public class PatientExamFormController {
             model.put("symptcategorylist", symptcategorylist);
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
-            
+
             PatientExamModel patientExamForm = null;
-            
+
             if (patientExamFormId != null) {
                 patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(patientExamFormId);
-                
+
             } else {
                 //PatientExamModel patientExamForm = new PatientExamModel();
             }
@@ -93,11 +94,14 @@ public class PatientExamFormController {
 //            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
 
             ///patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(encounterId);
-            PatientSymptomByExamModel testsymptopt = patientExamForm.getPatientSymptoms().get(3);
+
+            //PatientSymptomByExamModel testsymptopt = patientExamForm.getPatientSymptoms().get(3);
 
             model.put("patientExamForm", patientExamForm);
             System.out.println("semteacher: 1650. completed model variable: ok or not?...");
             System.out.println(model.toString());
+            List<String> selectedSymptOpt = new ArrayList();
+            model.put("selectedSymptOpt", selectedSymptOpt);
             //model.put("Current encounter is:", Context.getUserContext().getLocation());
 //            if (request.getParameter("patientId") != null) {
 //                model.put("appointment", getAppointment(null, Integer.parseInt(request.getParameter("patientId"))));
@@ -106,7 +110,12 @@ public class PatientExamFormController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String onSubmit(HttpServletRequest request, PatientExamModel patientExamForm, BindingResult result) throws Exception {
+    public String onSubmit(HttpServletRequest request,
+            @RequestParam(value = "selectedSymptOpt", required = false) String[][] selectedSymptOpt,
+            @RequestParam(value = "patientid", required = false) Integer patientid,
+            @RequestParam(value = "examId", required = false) Integer examId,
+            @RequestParam(value = "encounterId", required = false) Integer encounterId) throws Exception {
+
         HttpSession httpSession = request.getSession();
 
         if (Context.isAuthenticated()) {
@@ -115,12 +124,20 @@ public class PatientExamFormController {
             if (request.getParameter("save") != null) {
                 System.out.println("semteacher: 1700. save reques ok...");
                 //new AppointmentValidator().validate(appointment, result);
-                System.out.println("semteacher: 1710. request: " + request.toString());
+                // = new ArrayList(); 
+                if (request.getParameterMap().containsKey("selectedSymptOpt[71][]")) {
+                    String[] my_sel_arr = request.getParameterValues("selectedSymptOpt[71][]");
+                    System.out.println(my_sel_arr);
+                }
+
+                //System.out.println("semteacher: 1710. request: " + request.getParameter("selectedSymptOpt").toString());
+                System.out.println("semteacher: 1710. request: " + request.getParameter("selectedSymptOpt[71][]").toString());
+                //selectedSymptOpt = request.getParameter("selectedSymptOpt");
                 request.getParameterNames();
                 //System.out.println("semteacher: 1720. request symptom_options: "+request.getParameter("symptom_options").toString());
-                if (result.hasErrors()) {
-                    return null;
-                } else {
+//                if (result.hasErrors()) {
+//                    return null;
+//                } else {
 //					appointment.setDateCreated(new Date());
 //					if (flow != null) {
 //						appointment.setStatus(AppointmentStatus.WALKIN);
@@ -144,8 +161,8 @@ public class PatientExamFormController {
 //					else if (origin.equals("dashboard"))
 //						return "redirect:/patientDashboard.form?patientId=" + appointment.getPatient().getId().toString();
 //                                        
-                    return null;
-                }
+//                    return null;
+//                }
             }
 //			if (request.getParameter("findAvailableTime") != null) {
 //				if (fromDate != null && toDate != null && !fromDate.before(toDate))

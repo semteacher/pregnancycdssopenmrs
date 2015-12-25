@@ -12,11 +12,11 @@
 <p>model test - patient form data: ${patientexamform}</p>
 <p>model test - form id: ${patientExamForm.examId}</p>
 
-<form:form modelAttribute="patientExamForm" method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
+<form:form method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
     <fieldset>
         <input type="hidden" name="patientid" value="${patientId}" />
-        <input type="hidden" name="patientid" value="${encounterId}" />
-        <input type="hidden" name="patientid" value="${patientExamForm.examId}" />
+        <input type="hidden" name="encounterId" value="${encounterId}" />
+        <input type="hidden" name="examId" value="${patientExamForm.examId}" />
         <input type="hidden" name="process" value="true" />
         
         <table id="symptCatTable"class="display">
@@ -53,7 +53,7 @@
                                                                                 <c:set var="sel_status" scope="page" value=""/>
                                                                             </c:otherwise>
                                                                         </c:choose>
-                                                                        <span class="formtext"><input type="${sel_type}" id="${symptomOption.symptOptId}" name="symptom_options[${symptom.symptId}][]" value="${symptomOption.symptOptId}" ${sel_status} />${symptomOption.optName}</span>
+                                                                        <span class="formtext"><input type="${sel_type}" id="${symptomOption.symptOptId}" name="selectedSymptOpt[${symptom.symptId}][]" value="${symptomOption.symptOptId}" ${sel_status} />${symptomOption.optName}</span>
                                                                     </div>
                                                                 </c:when>
                                                             </c:choose>
