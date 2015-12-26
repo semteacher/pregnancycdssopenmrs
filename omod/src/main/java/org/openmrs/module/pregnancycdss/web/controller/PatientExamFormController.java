@@ -5,7 +5,9 @@
 package org.openmrs.module.pregnancycdss.web.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.PatientSymptomByExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
+import org.openmrs.module.pregnancycdss.SymptomModel;
+import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -111,29 +115,108 @@ public class PatientExamFormController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(HttpServletRequest request,
-            @RequestParam(value = "selectedSymptOpt", required = false) String[][] selectedSymptOpt,
             @RequestParam(value = "patientid", required = false) Integer patientid,
-            @RequestParam(value = "examId", required = false) Integer examId,
+            @RequestParam(value = "examId", required = false) Integer examFormId,
             @RequestParam(value = "encounterId", required = false) Integer encounterId) throws Exception {
 
         HttpSession httpSession = request.getSession();
 
         if (Context.isAuthenticated()) {
-            //AppointmentService appointmentService = Context.getService(AppointmentService.class);
-
             if (request.getParameter("save") != null) {
                 System.out.println("semteacher: 1700. save reques ok...");
-                //new AppointmentValidator().validate(appointment, result);
-                // = new ArrayList(); 
-                if (request.getParameterMap().containsKey("selectedSymptOpt[71][]")) {
-                    String[] my_sel_arr = request.getParameterValues("selectedSymptOpt[71][]");
-                    System.out.println(my_sel_arr);
+                //Get patient
+                PatientExamModel patientExamForm = null;
+                patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(examFormId);
+                //get patient symptom list
+                List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
+                //create map to store form responce data
+                Map<Integer, Integer[]> selectedSymptOpt = new HashMap<Integer, Integer[]>();
+                Map<Integer, List<Integer>> selectedSymptOpt1 = new HashMap<Integer, List<Integer>>();
+
+                List<SymptomModel> symptomlist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
+                //loop through  all symptoms
+                for (int sympt = 0; sympt < symptomlist.size(); sympt++) {
+                    System.out.println(symptomlist.get(sympt).getSymptName());
+                    //check is it symptom selected is?
+                    if (request.getParameterMap().containsKey("selectedSymptOpt[" + symptomlist.get(sympt).getId().toString() + "][]")) {
+                        System.out.println("symptom ID=" + symptomlist.get(sympt).getId().toString() + " is in POST!");
+                        //Symptom is selected! Get it:                
+                        String[] selStrArr = request.getParameterValues("selectedSymptOpt[" + symptomlist.get(sympt).getId().toString() + "][]");
+                        //convert string array to integer 
+                        Integer[] selIntArr = new Integer[selStrArr.length];
+                        for (int j = 0; j < selStrArr.length; j++) {
+                            // Note that this is assuming valid input
+                            // If you want to check then add a try/catch 
+                            // and another index for the numbers if to continue adding the others
+                            selIntArr[j] = Integer.parseInt(selStrArr[j]);
+                        }
+                        List<Integer> selIntList = Arrays.asList(selIntArr);
+                        //store selection as HashMap
+                        selectedSymptOpt.put(symptomlist.get(sympt).getId(), selIntArr);
+                        selectedSymptOpt1.put(symptomlist.get(sympt).getId(), selIntList);
+                        //check symptom type:
+                        if (symptomlist.get(sympt).getIsMulti()) {
+                            System.out.println("multi-YES");
+                            //Symptom has multiple options
+                            //get list of symptom options and iterate each
+                            List<SymptomOptionModel> tmpSymptOptList = symptomlist.get(sympt).getSymptOpt();
+                            for (SymptomOptionModel tmpSymptOpt : tmpSymptOptList) {
+                                if (tmpSymptOpt != null) {
+                                    //is it symptom option in POST?
+                                    Boolean isCurrSymptOptInPOST = selIntList.contains(tmpSymptOpt.getId());
+                                    //is it symptom option in database?
+                                    Boolean isCurrSymptOptInDB = false;
+                                    PatientSymptomByExamModel currSymptOptInDB = null;
+                                    for (PatientSymptomByExamModel tmpPatientSymptom : patientSymptomList) {
+                                        if (tmpPatientSymptom != null) {
+                                            Boolean testres = tmpPatientSymptom.getSymptOptId().intValue() == tmpSymptOpt.getSymptOptId().intValue();
+                                            System.out.println("checkDB: is "+tmpPatientSymptom.getSymptOptId() + "="+tmpSymptOpt.getId()+" ?:"+testres);
+                                            if (testres) {
+                                                System.out.println(tmpSymptOpt.getSymptOptId().toString() + " symptoptID found in DB!!!");
+                                                isCurrSymptOptInDB = true;
+                                                currSymptOptInDB = tmpPatientSymptom;
+                                            }
+                                        }
+                                    }
+                                    if (currSymptOptInDB != null) {
+                                        if (isCurrSymptOptInPOST == false) {
+                                            System.out.println(currSymptOptInDB.getSymptOptId().toString() + " symptoptID will be deleted");
+                                            //symptom option is in database but not in POST:it is unchecked and will be deleted
+                                            patientSymptomList.remove(currSymptOptInDB);
+                                            patientExamForm.setPatientSymptoms(patientSymptomList);
+                                            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+                                            System.out.println(currSymptOptInDB.getSymptOptId().toString() + " delete and save ok");
+                                        }
+                                    } else {
+                                        if (isCurrSymptOptInPOST != false) {
+                                            System.out.println(tmpSymptOpt.getOptName() + " will be added");
+                                            //Insert one new record
+                                            patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), tmpSymptOpt.getSymptom().getSymptCategory().getId(), tmpSymptOpt.getSymptom().getId(), tmpSymptOpt.getId()));
+                                            patientExamForm.setPatientSymptoms(patientSymptomList);
+                                            Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+                                            System.out.println(tmpSymptOpt.getOptName() + " added and saved ok");
+                                        }
+                                    }
+
+
+                                    //System.out.println(tmpSymptOpt);
+                                }
+                            }
+                        } else {
+                            System.out.println("multi-NO");
+                        }
+                    }
                 }
 
+//                if (request.getParameterMap().containsKey("selectedSymptOpt[71][]")) {
+//                    String[] my_sel_arr = request.getParameterValues("selectedSymptOpt[71][]");
+//                    System.out.println(my_sel_arr);
+//                }
+
                 //System.out.println("semteacher: 1710. request: " + request.getParameter("selectedSymptOpt").toString());
-                System.out.println("semteacher: 1710. request: " + request.getParameter("selectedSymptOpt[71][]").toString());
+                //System.out.println("semteacher: 1710. request: " + request.getParameter("selectedSymptOpt[71][]").toString());
                 //selectedSymptOpt = request.getParameter("selectedSymptOpt");
-                request.getParameterNames();
+                //request.getParameterNames();
                 //System.out.println("semteacher: 1720. request symptom_options: "+request.getParameter("symptom_options").toString());
 //                if (result.hasErrors()) {
 //                    return null;
