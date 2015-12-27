@@ -170,7 +170,7 @@ public class PatientExamFormController {
                                     for (PatientSymptomByExamModel tmpPatientSymptom : patientSymptomList) {
                                         if (tmpPatientSymptom != null) {
                                             Boolean testres = tmpPatientSymptom.getSymptOptId().intValue() == tmpSymptOpt.getSymptOptId().intValue();
-                                            System.out.println("checkDB: is "+tmpPatientSymptom.getSymptOptId() + "="+tmpSymptOpt.getId()+" ?:"+testres);
+                                            System.out.println("checkDB: is " + tmpPatientSymptom.getSymptOptId() + "=" + tmpSymptOpt.getId() + " ?:" + testres);
                                             if (testres) {
                                                 System.out.println(tmpSymptOpt.getSymptOptId().toString() + " symptoptID found in DB!!!");
                                                 isCurrSymptOptInDB = true;
@@ -197,13 +197,43 @@ public class PatientExamFormController {
                                             System.out.println(tmpSymptOpt.getOptName() + " added and saved ok");
                                         }
                                     }
-
-
-                                    //System.out.println(tmpSymptOpt);
                                 }
                             }
                         } else {
-                            System.out.println("multi-NO");
+                            System.out.println("multi-NO");                            
+                            List<Integer> patientSymptomsBySymptomIdPosList = getSymtomsPos(patientSymptomList, symptomlist.get(sympt).getSymptId());                            
+                            if (patientSymptomsBySymptomIdPosList.size() > 0) {
+                                if (patientSymptomsBySymptomIdPosList.size() > 1) {
+                                    //delete all and insert new one
+                                    for (Integer tmpPos : patientSymptomsBySymptomIdPosList) {                                        
+                                        patientSymptomList.remove(tmpPos.intValue());
+                                    }
+                                    //Insert one new record
+                                    System.out.println(selIntList.get(0) + " symptOptId will be added");
+                                    patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
+                                    patientExamForm.setPatientSymptoms(patientSymptomList);
+                                    Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+                                    System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
+                                } else {
+                                    //Update single record
+                                    if (patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).getSymptOptId().intValue() != selIntList.get(0).intValue()) {
+                                        System.out.println(selIntList.get(0) + " symptOptId will be updated");                                        
+                                        patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).setSymptOptId(selIntList.get(0));
+                                        patientExamForm.setPatientSymptoms(patientSymptomList);
+                                        Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+                                        System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
+                                    } else {
+                                        System.out.println(selIntList.get(0) + " symptOptId will be skipped");
+                                    }
+                                }
+                            } else {
+                                //Insert one new record
+                                System.out.println(selIntList.get(0) + " symptOptId will be added");
+                                patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
+                                patientExamForm.setPatientSymptoms(patientSymptomList);
+                                Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
+                                System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
+                            }
                         }
                     }
                 }
@@ -253,5 +283,20 @@ public class PatientExamFormController {
 //			}
         }
         return null;
+    }
+
+    public List<Integer> getSymtomsPos(List<PatientSymptomByExamModel> patientSymptomsList, Integer symptomId) {
+        List<Integer> symtomsPos = new ArrayList<Integer>();
+        for (PatientSymptomByExamModel tmpPatientSymptom : patientSymptomsList) {
+            if (tmpPatientSymptom != null) {
+                Boolean testres = tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue();
+                System.out.println("PatModel - checkDB: is " + tmpPatientSymptom.getSymptomId() + "=" + symptomId.intValue() + " ?:" + testres);
+                if (testres) {
+                    int currpos = patientSymptomsList.indexOf(tmpPatientSymptom);
+                    symtomsPos.add(new Integer(currpos));
+                }
+            }
+        }
+        return symtomsPos;
     }
 }
