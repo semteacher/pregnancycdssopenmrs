@@ -15,6 +15,15 @@
 
 <p>Hello ${user.systemId}!</p>
 
+<div id="addPtientExamForm">
+    <openmrs:hasPrivilege privilege="Add Observations">
+        <div>
+            <a href="${pageContext.request.contextPath}/module/pregnancycdss/manage.submitDecisionTreeGAE">
+                <spring:message code="pregnancycdss.manage.submitDecisionTreeGAE"/>
+            </a>
+        </div>
+    </openmrs:hasPrivilege>
+</div>
 
 <table id="patientexamformslistTable"class="display">
     <thead>
@@ -39,7 +48,7 @@
                 <td>${patientexamform.createDate}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${patientexamformlst.isFirstPregnancy == true}">
+                        <c:when test="${patientexamform.isFirstPregnancy == true}">
                             Yes
                         </c:when>
                         <c:otherwise>

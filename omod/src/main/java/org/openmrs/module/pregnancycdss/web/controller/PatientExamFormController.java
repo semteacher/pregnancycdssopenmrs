@@ -183,6 +183,8 @@ public class PatientExamFormController {
                                             System.out.println(currSymptOptInDB.getSymptOptId().toString() + " symptoptID will be deleted");
                                             //symptom option is in database but not in POST:it is unchecked and will be deleted
                                             patientSymptomList.remove(currSymptOptInDB);
+                                            patientExamForm.setExamDate(new Date());
+                                            patientExamForm.setExamUserId(Context.getAuthenticatedUser());                                            
                                             patientExamForm.setPatientSymptoms(patientSymptomList);
                                             Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                             System.out.println(currSymptOptInDB.getSymptOptId().toString() + " delete and save ok");
@@ -192,6 +194,8 @@ public class PatientExamFormController {
                                             System.out.println(tmpSymptOpt.getOptName() + " will be added");
                                             //Insert one new record
                                             patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), tmpSymptOpt.getSymptom().getSymptCategory().getId(), tmpSymptOpt.getSymptom().getId(), tmpSymptOpt.getId()));
+                                            patientExamForm.setExamDate(new Date());
+                                            patientExamForm.setExamUserId(Context.getAuthenticatedUser());
                                             patientExamForm.setPatientSymptoms(patientSymptomList);
                                             Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                             System.out.println(tmpSymptOpt.getOptName() + " added and saved ok");
@@ -211,6 +215,8 @@ public class PatientExamFormController {
                                     //Insert one new record
                                     System.out.println(selIntList.get(0) + " symptOptId will be added");
                                     patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
+                                    patientExamForm.setExamDate(new Date());
+                                    patientExamForm.setExamUserId(Context.getAuthenticatedUser()); 
                                     patientExamForm.setPatientSymptoms(patientSymptomList);
                                     Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                     System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
@@ -219,6 +225,8 @@ public class PatientExamFormController {
                                     if (patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).getSymptOptId().intValue() != selIntList.get(0).intValue()) {
                                         System.out.println(selIntList.get(0) + " symptOptId will be updated");                                        
                                         patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).setSymptOptId(selIntList.get(0));
+                                        patientExamForm.setExamDate(new Date());
+                                        patientExamForm.setExamUserId(Context.getAuthenticatedUser());
                                         patientExamForm.setPatientSymptoms(patientSymptomList);
                                         Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                         System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
@@ -230,6 +238,8 @@ public class PatientExamFormController {
                                 //Insert one new record
                                 System.out.println(selIntList.get(0) + " symptOptId will be added");
                                 patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
+                                patientExamForm.setExamDate(new Date());
+                                patientExamForm.setExamUserId(Context.getAuthenticatedUser());  
                                 patientExamForm.setPatientSymptoms(patientSymptomList);
                                 Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                 System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
@@ -282,7 +292,8 @@ public class PatientExamFormController {
 //					result.rejectValue("timeSlot", "appointmentscheduling.Appointment.error.InvalidDateInterval");
 //			}
         }
-        return null;
+        //go back to encounter
+        return "redirect:/admin/encounters/encounter.form?encounterId="+encounterId.intValue();
     }
 
     public List<Integer> getSymtomsPos(List<PatientSymptomByExamModel> patientSymptomsList, Integer symptomId) {
