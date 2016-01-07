@@ -14,12 +14,14 @@
 package org.openmrs.module.pregnancycdss.api;
 
 import java.util.List;
+import java.util.Set;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
@@ -47,6 +49,7 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     public List<SymptomOptionModel> getAllSymptOptions() throws APIException;
     public List<DiseasesModel> getAllDiseases() throws APIException;
     public List<PatientExamModel> getAllPatientExamForms() throws APIException;
+    public Set <DiseasesSymptOptModel> getAllDiseasesBySymptOpt() throws APIException;
     
     public List<PatientExamModel> getPatientExamByEncouter(Encounter encounter);
     public List<PatientExamModel> getPatientExamByPatient(Patient patient);

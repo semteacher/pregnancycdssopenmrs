@@ -12,9 +12,11 @@
 package org.openmrs.module.pregnancycdss.api.db;
 
 import java.util.List;
+import java.util.Set;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
@@ -43,4 +45,6 @@ public interface pregnancycdssserviceDAO {
     public List<PatientExamModel> getPatientExamByPatient(Patient patient);
 
     public PatientExamModel getPatientExamById(Integer patientExamFormId);
+
+    public Set<DiseasesSymptOptModel> getAllDiseasesBySymptOpt();
 }

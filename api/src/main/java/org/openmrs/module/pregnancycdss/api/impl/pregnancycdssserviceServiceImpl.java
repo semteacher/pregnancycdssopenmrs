@@ -12,6 +12,7 @@
 package org.openmrs.module.pregnancycdss.api.impl;
 
 import java.util.List;
+import java.util.Set;
 import org.openmrs.Patient;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
@@ -20,6 +21,7 @@ import org.openmrs.Encounter;
 import org.openmrs.api.APIException;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
@@ -115,5 +117,13 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         System.out.println("semteacher: 1020. Calling dao from service...");
         log.debug("semteacher: 1020. Calling dao from service...");
         return getDao().getPatientExamById(patientExamFormId);
+    }
+
+    @Override
+    public Set<DiseasesSymptOptModel> getAllDiseasesBySymptOpt() throws APIException {
+        System.out.println("semteacher: 21000. Calling dao from service...geting diseases by symptom options");
+        log.debug("semteacher: 21000. Calling dao from service...geting diseases by symptom options");
+        return getDao().getAllDiseasesBySymptOpt();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

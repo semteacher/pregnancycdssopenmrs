@@ -90,6 +90,19 @@ public class PregnancyCDSSManageController {
         System.out.println("semteacher: 00.20. completed model variable: ok or not?...");
         System.out.println(model.toString());
     }
+    
+    @RequestMapping(value = "/module/pregnancycdss/managediseasessymptopt", method = RequestMethod.GET)
+    public void managediseasessymptopt(ModelMap model) {
+        model.addAttribute("user", Context.getAuthenticatedUser());
+        log.debug("semteacher: 22000.0 Try to get diseasesBySymptOptList from db: invoke service call...");
+        System.out.println("semteacher: 22000.0 Try to get diseasesBySymptOptList from db: invoke service call...");
+        Set<DiseasesSymptOptModel> diseasesBySymptOptList = Context.getService(pregnancycdssserviceService.class).getAllDiseasesBySymptOpt();
+        System.out.println("semteacher: 22000.1. Got diseasesBySymptOptList from db: ok or not?...");
+        System.out.println(diseasesBySymptOptList.get(0).getDiseasesSymptOptId());
+        model.addAttribute("diseasesBySymptOptList", diseasesBySymptOptList);
+        System.out.println("semteacher: 22000.2. completed diseasesBySymptOptList model variable: ok or not?...");
+        System.out.println(model.toString());
+    }
 
     @RequestMapping(value = "/module/pregnancycdss/managepatientexams", method = RequestMethod.GET)
     public void managepatientexams(ModelMap model) {

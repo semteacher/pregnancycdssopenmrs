@@ -12,6 +12,7 @@
 package org.openmrs.module.pregnancycdss.api.db.hibernate;
 
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
@@ -21,6 +22,7 @@ import org.hibernate.criterion.Restrictions;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
@@ -163,7 +165,6 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
 //				.setParameter("visit", visit).uniqueResult();
 //	}
 
-
         return patientexamformslist;
     }
 
@@ -193,6 +194,22 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         Session session = sessionFactory.getCurrentSession();
         PatientExamModel patientexamform = null;
         patientexamform = (PatientExamModel) session.createCriteria(PatientExamModel.class).add(Restrictions.eq("examId", patientExamFormId)).uniqueResult();
-        return patientexamform;        
+        return patientexamform;
+    }
+
+    @Override
+    public Set<DiseasesSymptOptModel> getAllDiseasesBySymptOpt() {
+        System.out.println("semteacher: 21002. dao-getting session...");
+        log.debug("semteacher: 21002. dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println("semteacher: 21003. dao-begin callin data ...");
+        log.debug("semteacher: 21003. dao-begin callin data ...");
+        Set<DiseasesSymptOptModel> diseasessymptoptlist = session.createCriteria(DiseasesSymptOptModel.class).list();
+        //List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("idOrder")).list();
+
+        System.out.println("semteacher: 21004. dao-callin data succesfull... object count:"+diseasessymptoptlist.size());
+        log.debug("semteacher: 21004. dao-callin data succesfull...object count:"+diseasessymptoptlist.size());
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return diseasessymptoptlist;
     }
 }

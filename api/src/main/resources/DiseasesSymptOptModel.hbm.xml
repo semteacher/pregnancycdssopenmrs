@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.openmrs.module.pregnancycdss">
+    <class name="DiseasesSymptOptModel" table="form_pregnancycdss_diseases_sympt_opt">
+        <id name="diseasesSymptOptId" type="java.lang.Integer" column="diseases_sympt_opt_id" unsaved-value="205">
+            <generator class="native"/>
+        </id>
+        <discriminator column="diseases_sympt_opt_id" insert="false" />
+    
+        <many-to-one name="disiase" class="DiseasesModel" column="id_diseases" not-null="true" />
+        <many-to-one name="symptOpt" class="SymptomOptionModel" column="id_sympt_opt" not-null="true" />
+
+        <property name="py" type="java.lang.Float" column="py" unique="false"/>
+        <property name="pn" type="java.lang.Float" column="pn" unique="false"/>
+    </class>
+</hibernate-mapping>
