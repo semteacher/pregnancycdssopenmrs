@@ -126,4 +126,12 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         return getDao().getAllDiseasesBySymptOpt();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<DiseasesSymptOptModel> getDiseasesSymptOptBySymptoptId(Integer selectedSymptOptId) {
+        System.out.println("semteacher: 25000. Calling dao from service...geting all diseases by symptom options");
+        log.debug("semteacher: 25000. Calling dao from service...geting all diseases by symptom options");
+        return getDao().getDiseasesSymptOptBySymptoptId(Integer selectedSymptOptId);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

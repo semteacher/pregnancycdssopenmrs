@@ -79,12 +79,12 @@ public class DiseasesSymptOptModel extends BaseOpenmrsObject implements Serializ
 
     @Override
     public Integer getId() {
-        return getSymptId();
+        return getDiseasesSymptOptId();
     }
 
     @Override
     public void setId(Integer id) {
-        setSymptId(id);
+        setDiseasesSymptOptId(id);
     }
 
 }

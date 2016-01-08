@@ -127,6 +127,9 @@ public class PatientExamFormController {
                 //Get patient
                 PatientExamModel patientExamForm = null;
                 patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(examFormId);
+                //prepare patient diseases probability list
+                Set<DiseasesProbability> patientDiseasesProbability = PrepareSetPatientDiseasesProbability();
+                
                 //get patient symptom list
                 List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
                 //create map to store form responce data
@@ -154,6 +157,8 @@ public class PatientExamFormController {
                         //store selection as HashMap
                         selectedSymptOpt.put(symptomlist.get(sympt).getId(), selIntArr);
                         selectedSymptOpt1.put(symptomlist.get(sympt).getId(), selIntList);
+                        //Get diseases form the current selection to the final list 
+                        FillSetPatientDiseasesProbability(patientDiseasesProbability, selIntList);
                         //check symptom type:
                         if (symptomlist.get(sympt).getIsMulti()) {
                             System.out.println("multi-YES");
@@ -247,6 +252,9 @@ public class PatientExamFormController {
                         }
                     }
                 }
+                //generate diseases list
+                for (Map<Integer, List<Integer>> selection: selectedSymptOpt1){
+                }
 
 //                if (request.getParameterMap().containsKey("selectedSymptOpt[71][]")) {
 //                    String[] my_sel_arr = request.getParameterValues("selectedSymptOpt[71][]");
@@ -309,5 +317,40 @@ public class PatientExamFormController {
             }
         }
         return symtomsPos;
+    }
+    
+    //fill patient diseases probability list with default values
+    public Set<DiseasesProbability> PrepareSetPatientDiseasesProbability(){
+        Set<DiseasesProbability> patientDiseasesProbability = new ArrayList<DiseasesProbability>();
+        List<DiseasesModel> diseaseslist = Context.getService(pregnancycdssserviceService.class).getAllDiseases();
+        for (DiseasesModel currDisease:diseaseslist) {
+            DiseasesProbability tmpDiseasesProbability = new DiseasesProbability(currDisease.diseasesId, currDisease. diseasesName, 1, 1, 0);
+            patientDiseasesProbability.add(tmpDiseasesProbability);
+        }
+        return patientDiseasesProbability;
+    }
+    
+    //calculate diseases probability by Guliaev algorithm
+    public void FillSetPatientDiseasesProbability(Set<DiseasesProbability> patientDiseasesProbability, List<Integer> selIntList) {
+        //process all selections
+        for (Integer selectedSymptOptId:selIntList) {
+            //TODO:get list of diseases related to given selected symptom option ID
+            List<DiseasesSymptOptModel> diseasesSymptOptlist = Context.getService(pregnancycdssserviceService.class).getDiseasesSymptOptBySymptoptId(selectedSymptOptId);
+            //check is it diseases list exist
+            if (diseasesSymptOptlist.size() > 0) {
+                //process all selected diseases
+                for (DiseasesSymptOptModel tmpDiseasesSymptOpt:diseasesSymptOptlist) {
+                    //process all patient diseases list items
+                    for (DiseasesProbability tmpDiseasesProbability:patientDiseasesProbability) {
+                        if (tmpDiseasesProbability.intValue()==tmpDiseasesSymptOpt.disiase.diseasesId.intValue()) {
+                            tmpDiseasesProbability.py.floatValue() = tmpDiseasesProbability.py.floatValue()*tmpDiseasesSymptOpt.py.floatValue();
+                            tmpDiseasesProbability.pn.floatValue() = tmpDiseasesProbability.pn.floatValue()*tmpDiseasesSymptOpt.pn.floatValue();
+                            tmpDiseasesProbability.selCount.intValue() = tmpDiseasesProbability.selCount.intValue()+1;
+                        }
+                    }
+                }
+            }
+        }
+    
     }
 }

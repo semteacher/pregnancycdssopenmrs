@@ -47,4 +47,6 @@ public interface pregnancycdssserviceDAO {
     public PatientExamModel getPatientExamById(Integer patientExamFormId);
 
     public Set<DiseasesSymptOptModel> getAllDiseasesBySymptOpt();
+
+    public List<DiseasesSymptOptModel> getDiseasesSymptOptBySymptoptId(Integer selectedSymptOptId);
 }

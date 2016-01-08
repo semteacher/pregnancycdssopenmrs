@@ -53,6 +53,7 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     
     public List<PatientExamModel> getPatientExamByEncouter(Encounter encounter);
     public List<PatientExamModel> getPatientExamByPatient(Patient patient);
+    List<DiseasesSymptOptModel> getDiseasesSymptOptBySymptoptId(Integer selectedSymptOptId);
     	/**
 	 * Creates or updates the given appointment type in the database.
 	 * 
