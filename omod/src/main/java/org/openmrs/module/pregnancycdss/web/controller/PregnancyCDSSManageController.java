@@ -12,10 +12,12 @@
 package org.openmrs.module.pregnancycdss.web.controller;
 
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -98,7 +100,7 @@ public class PregnancyCDSSManageController {
         System.out.println("semteacher: 22000.0 Try to get diseasesBySymptOptList from db: invoke service call...");
         Set<DiseasesSymptOptModel> diseasesBySymptOptList = Context.getService(pregnancycdssserviceService.class).getAllDiseasesBySymptOpt();
         System.out.println("semteacher: 22000.1. Got diseasesBySymptOptList from db: ok or not?...");
-        System.out.println(diseasesBySymptOptList.get(0).getDiseasesSymptOptId());
+        System.out.println(diseasesBySymptOptList.size());
         model.addAttribute("diseasesBySymptOptList", diseasesBySymptOptList);
         System.out.println("semteacher: 22000.2. completed diseasesBySymptOptList model variable: ok or not?...");
         System.out.println(model.toString());

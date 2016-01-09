@@ -72,5 +72,15 @@ public class DiseasesProbability extends BaseOpenmrsObject implements Serializab
         this.pn = pn;
         this.selCount = selCount;
     }
+
+    @Override
+    public Integer getId() {
+        return getDiseaseId();
+    }
+
+    @Override
+    public void setId(Integer intgr) {
+        setDiseaseId(intgr);
+    }
     
 }
