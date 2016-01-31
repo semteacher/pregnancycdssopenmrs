@@ -120,9 +120,9 @@ public class PatientExamFormController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(HttpServletRequest request,
-            @RequestParam(value = "patientid", required = false) Integer patientid,
+            @RequestParam(value = "patientId", required = false) Integer patientid,
             @RequestParam(value = "examId", required = false) Integer examFormId,
-            @RequestParam(value = "encounterId", required = false) Integer encounterId) throws Exception {
+            @RequestParam(value = "encountId", required = false) Integer encounterId) throws Exception {
 
         HttpSession httpSession = request.getSession();
 
@@ -257,6 +257,9 @@ public class PatientExamFormController {
                         }
                     }
                 }
+                //set expected disease with probability alghoritm
+                patientExamForm.setExpectedDisease(GetExpectedDisease(patientDiseasesProbability));
+                Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                 //generate diseases list
                 //for (Map<Integer, List<Integer>> selection: selectedSymptOpt1){
                 //}
@@ -359,5 +362,18 @@ public class PatientExamFormController {
             }
         }
     
+    }
+    
+    //get expected disease from the set
+    public String GetExpectedDisease(Set<DiseasesProbability> diseasesProbabilityList){
+        String expectedDisease = "Not defined!";
+        Integer maxSelCount = 0;
+        for (DiseasesProbability diseasesProbability:diseasesProbabilityList) {
+            if (diseasesProbability.getSelcount().intValue()>maxSelCount.intValue()){
+                maxSelCount = diseasesProbability.getSelcount().intValue();
+                expectedDisease = diseasesProbability.getDisiaseName();
+            }
+        }
+        return expectedDisease;
     }
 }

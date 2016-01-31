@@ -13,8 +13,8 @@
 
 <form:form method="post" id="editPatientExamForm" name="pregnancy_cdss_form" >
     <fieldset>
-        <input type="hidden" name="patientid" value="${patientId}" />
-        <input type="hidden" name="encounterId" value="${encounterId}" />
+        <input type="hidden" name="patientId" value="${patientId}" />
+        <input type="hidden" name="encountId" value="${encounterId}" />
         <input type="hidden" name="examId" value="${patientExamForm.examId}" />
         <input type="hidden" name="isFirstPregnancy" value="${patientExamForm.isFirstPregnancy}" />
         <input type="hidden" name="process" value="true" />       
