@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.pregnancycdss.DiseasesModel;
+import org.openmrs.module.pregnancycdss.DiseasesProbability;
+import org.openmrs.module.pregnancycdss.DiseasesSymptOptModel;
 import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.PatientSymptomByExamModel;
 import org.openmrs.module.pregnancycdss.SymptCategoryModel;
@@ -27,7 +32,7 @@ import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+//import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -253,8 +258,8 @@ public class PatientExamFormController {
                     }
                 }
                 //generate diseases list
-                for (Map<Integer, List<Integer>> selection: selectedSymptOpt1){
-                }
+                //for (Map<Integer, List<Integer>> selection: selectedSymptOpt1){
+                //}
 
 //                if (request.getParameterMap().containsKey("selectedSymptOpt[71][]")) {
 //                    String[] my_sel_arr = request.getParameterValues("selectedSymptOpt[71][]");
@@ -321,10 +326,10 @@ public class PatientExamFormController {
     
     //fill patient diseases probability list with default values
     public Set<DiseasesProbability> PrepareSetPatientDiseasesProbability(){
-        Set<DiseasesProbability> patientDiseasesProbability = new ArrayList<DiseasesProbability>();
+        Set<DiseasesProbability> patientDiseasesProbability = new HashSet<DiseasesProbability>();
         List<DiseasesModel> diseaseslist = Context.getService(pregnancycdssserviceService.class).getAllDiseases();
         for (DiseasesModel currDisease:diseaseslist) {
-            DiseasesProbability tmpDiseasesProbability = new DiseasesProbability(currDisease.diseasesId, currDisease. diseasesName, 1, 1, 0);
+            DiseasesProbability tmpDiseasesProbability = new DiseasesProbability(currDisease.getDiseasesId(), currDisease.getDiseasesName(), new Float(1), new Float(1), 0);
             patientDiseasesProbability.add(tmpDiseasesProbability);
         }
         return patientDiseasesProbability;
@@ -342,10 +347,12 @@ public class PatientExamFormController {
                 for (DiseasesSymptOptModel tmpDiseasesSymptOpt:diseasesSymptOptlist) {
                     //process all patient diseases list items
                     for (DiseasesProbability tmpDiseasesProbability:patientDiseasesProbability) {
-                        if (tmpDiseasesProbability.intValue()==tmpDiseasesSymptOpt.disiase.diseasesId.intValue()) {
-                            tmpDiseasesProbability.py.floatValue() = tmpDiseasesProbability.py.floatValue()*tmpDiseasesSymptOpt.py.floatValue();
-                            tmpDiseasesProbability.pn.floatValue() = tmpDiseasesProbability.pn.floatValue()*tmpDiseasesSymptOpt.pn.floatValue();
-                            tmpDiseasesProbability.selCount.intValue() = tmpDiseasesProbability.selCount.intValue()+1;
+                        if (tmpDiseasesProbability.getDiseaseId().intValue()==tmpDiseasesSymptOpt.getDisiase().getDiseasesId().intValue()) {
+                            tmpDiseasesProbability.setPy(tmpDiseasesProbability.getPy().floatValue()*tmpDiseasesSymptOpt.getPy().floatValue());
+                            //tmpDiseasesProbability.pn.floatValue() = tmpDiseasesProbability.pn.floatValue()*tmpDiseasesSymptOpt.pn.floatValue();
+                            tmpDiseasesProbability.setPn(tmpDiseasesProbability.getPn().floatValue()*tmpDiseasesSymptOpt.getPn().floatValue());
+                            //tmpDiseasesProbability.selCount.intValue() = tmpDiseasesProbability.selCount.intValue()+1;
+                            tmpDiseasesProbability.setSelcount(tmpDiseasesProbability.getSelcount().intValue()+1);
                         }
                     }
                 }

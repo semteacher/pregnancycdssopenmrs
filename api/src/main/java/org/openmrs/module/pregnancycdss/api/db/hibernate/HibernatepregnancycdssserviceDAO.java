@@ -204,7 +204,7 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         Session session = sessionFactory.getCurrentSession();
         System.out.println("semteacher: 21003. dao-begin callin data ...");
         log.debug("semteacher: 21003. dao-begin callin data ...");
-        Set<DiseasesSymptOptModel> diseasessymptoptlist = session.createCriteria(DiseasesSymptOptModel.class).list();
+        Set<DiseasesSymptOptModel> diseasessymptoptlist = (Set) session.createCriteria(DiseasesSymptOptModel.class).list();
         //List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("idOrder")).list();
 
         System.out.println("semteacher: 21004. dao-callin data succesfull... object count:"+diseasessymptoptlist.size());
