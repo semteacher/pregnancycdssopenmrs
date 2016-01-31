@@ -1,7 +1,6 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
-<openmrs:htmlInclude
-	file="/moduleResources/pregnancycdss/style.css" />
+<openmrs:htmlInclude file="/moduleResources/pregnancycdss/modulestyle.css" />
 <%@ include file="template/localHeader.jsp"%>
 
 <p>Survey for the patient: Id=${patientId} name=${patientdata.names}</p>
@@ -19,6 +18,7 @@
         <input type="hidden" name="isFirstPregnancy" value="${patientExamForm.isFirstPregnancy}" />
         <input type="hidden" name="process" value="true" />       
         
+        <input type="submit" class="saveButton" name="save" value="<spring:message code='pregnancycdss.patientExamForm.Edit.save'/>" />
         <table id="symptCatTable"class="display">
             <tbody>
                 <tr>

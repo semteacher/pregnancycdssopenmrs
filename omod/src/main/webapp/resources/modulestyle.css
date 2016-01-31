@@ -60,12 +60,15 @@ h1 {
     padding: 5px;
     margin: 5px;
     background-color: rgba(143, 188, 143, 0.58);
+    display: inline-table;
+    width: 200px;
 }
 
 .symptcattitletext {
     font-size: 120%;
     font-weight: bold;
     background-color: orange;
+    display: block;
 }
 
 .symptomtext {
