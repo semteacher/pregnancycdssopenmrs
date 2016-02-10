@@ -107,4 +107,53 @@
         </div>
     </openmrs:hasPrivilege>
 </div>
+<a href="${pageContext.request.contextPath}/admin/encounters/encounter.form?encounterId=${encounter.encounterId}&gaesubmit=true&patientExamFormId=${patientexamformlst.examId}&&patientId=${encounter.patient.patientId}">
+                <spring:message code="pregnancycdss.patientExamForm.New.form"/>
+            </a>
+<div id="tmpSymtomTableBlock">
+<table id="symptomsTable" class="display">
+    <thead>
+        <tr>
+            <th>SymptID</th>
+            <th>Symptom Name</th>
+            <th>Symptom Description</th>
+            <th>Category</th>
+            <th>Order</th>
+            <th>Multi</th>
+            <th>Selected</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="symptom" items="${model.symptomList}">
+            <tr>
+                <td>${symptom.symptId}</td>
+                <td>${symptom.symptName}</td>
+                <td>${symptom.symptNotes}</td>
+                <td>${symptom.symptCategory.catName}</td>
+                <td>${symptom.idOrder}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${symptom.isMulti == true}">
+                            Yes
+                        </c:when>
+                        <c:otherwise>
+                            No
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${symptom.isSelected == true}">
+                            Yes
+                        </c:when>
+                        <c:otherwise>
+                            No
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+</div>
 </p>

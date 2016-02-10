@@ -26,7 +26,7 @@ public class PregnancyCDSSEncounterFormConroller {
 
     protected final Log log = LogFactory.getLog(getClass());
 
-    @RequestMapping("/module/pregnancycdss/PregnancyCDSSEncounterForm.box")
+    @RequestMapping(value = "/module/pregnancycdss/PregnancyCDSSEncounterForm.box", method = RequestMethod.GET)
     public String showForm(HttpServletRequest request, @RequestParam("encounterId") Integer encounterId, @RequestParam("action") String action) {
         System.out.println("1001: PregnancyCDSSEncounterFormConroller: show form action?");
         if (action.equals("newPatientExam")) {
