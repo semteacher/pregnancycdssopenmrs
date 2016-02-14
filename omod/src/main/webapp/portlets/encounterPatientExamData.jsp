@@ -8,6 +8,22 @@
     $j(document).ready(function() {
         $j('#patientexamformslistTable').dataTable();
     } );
+    
+    var myurl = '${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.json';
+    function gaeDecisionTreeSubmitFunction(examId,encounterId,patientId){
+        alert('examId='+examId+', encounterId='+encounterId+', patientId='+patientId+ ','+myurl);
+        jQuery.ajax({  
+            type : 'GET',   
+            url : myurl,   
+            data : 'examId=' + examId + '&encounterId=' + encounterId + '&patientId=' + patientId,  
+            success : function(response) {  
+                alert(response);   
+            },  
+            error : function(e) {  
+                alert('Error: ' + e);   
+            }  
+        }); 
+    };
 </script>
 
 <p>
@@ -22,7 +38,7 @@
 </div>
 </p>
 <div id="ptientExamTable">
-    <table id="patientexamformslistTable"class="display">
+    <table id="patientexamformslistTable" class="display">
         <thead>
             <tr>
                 <th>Exam ID</th>
@@ -34,6 +50,7 @@
                 <th>Expected Disease</th>
                 <th>DecisionTree Disease</th>
                 <th>submit to DecisionTree</th>
+                <th>submit GAE2</th>
                 <th>Edit survey form </th>
                 <th>Delete survey form </th>
             </tr>
@@ -58,9 +75,9 @@
                     <td>${patientexamformlst.finalDisease}</td>
                     <td>${patientexamformlst.expectedDisease}</td>
                     <td>${patientexamformlst.decisionTreeDiseasesList}</td>
-                    
+
                     <td>
-                        <div id="addPtientExamForm">
+                        <div id="submitPtientExamForm2GAE1">
                             <openmrs:hasPrivilege privilege="Add Observations">
                                 <div>
                                     <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.decisionTreeGAE?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
@@ -71,7 +88,16 @@
                         </div>
                     </td>
                     <td>
-                        <div id="addPtientExamForm">
+                        <div id="submitPtientExamForm2GAE2">
+                            <openmrs:hasPrivilege privilege="Add Observations">
+                                <div>
+                                    <input type="button" class="submitGAE" value="<spring:message code="pregnancycdss.patientExamForm.Submit.decisionTreeGAE"/>" onclick="gaeDecisionTreeSubmitFunction(${patientexamformlst.examId}, ${encounter.encounterId}, ${encounter.patient.patientId})">
+                                </div>
+                            </openmrs:hasPrivilege>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="edittPtientExamForm">
                             <openmrs:hasPrivilege privilege="Add Observations">
                                 <div>
                                     <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.form?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
@@ -82,7 +108,7 @@
                         </div>
                     </td>
                     <td>
-                        <div id="addPtientExamForm">
+                        <div id="deletePtientExamForm">
                             <openmrs:hasPrivilege privilege="Add Observations">
                                 <div>
                                     <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.delete?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
@@ -107,53 +133,55 @@
         </div>
     </openmrs:hasPrivilege>
 </div>
-<a href="${pageContext.request.contextPath}/admin/encounters/encounter.form?encounterId=${encounter.encounterId}&gaesubmit=true&patientExamFormId=${patientexamformlst.examId}&&patientId=${encounter.patient.patientId}">
-                <spring:message code="pregnancycdss.patientExamForm.New.form"/>
-            </a>
+<div id="submitPtientExamForm2GAEtest">
+    <a href="${pageContext.request.contextPath}/admin/encounters/encounter.form?encounterId=${encounter.encounterId}&gaesubmit=true&patientExamFormId=${patientexamformlst.examId}&&patientId=${encounter.patient.patientId}">
+        GAE Submission test 1
+    </a>
+</div>
 <div id="tmpSymtomTableBlock">
-<table id="symptomsTable" class="display">
-    <thead>
-        <tr>
-            <th>SymptID</th>
-            <th>Symptom Name</th>
-            <th>Symptom Description</th>
-            <th>Category</th>
-            <th>Order</th>
-            <th>Multi</th>
-            <th>Selected</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="symptom" items="${model.symptomList}">
+    <table id="symptomsTable" class="display">
+        <thead>
             <tr>
-                <td>${symptom.symptId}</td>
-                <td>${symptom.symptName}</td>
-                <td>${symptom.symptNotes}</td>
-                <td>${symptom.symptCategory.catName}</td>
-                <td>${symptom.idOrder}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${symptom.isMulti == true}">
-                            Yes
-                        </c:when>
-                        <c:otherwise>
-                            No
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${symptom.isSelected == true}">
-                            Yes
-                        </c:when>
-                        <c:otherwise>
-                            No
-                        </c:otherwise>
-                    </c:choose>
-                </td>
+                <th>SymptID</th>
+                <th>Symptom Name</th>
+                <th>Symptom Description</th>
+                <th>Category</th>
+                <th>Order</th>
+                <th>Multi</th>
+                <th>Selected</th>
             </tr>
-        </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <c:forEach var="symptom" items="${model.symptomList}">
+                <tr>
+                    <td>${symptom.symptId}</td>
+                    <td>${symptom.symptName}</td>
+                    <td>${symptom.symptNotes}</td>
+                    <td>${symptom.symptCategory.catName}</td>
+                    <td>${symptom.idOrder}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${symptom.isMulti == true}">
+                                Yes
+                            </c:when>
+                            <c:otherwise>
+                                No
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${symptom.isSelected == true}">
+                                Yes
+                            </c:when>
+                            <c:otherwise>
+                                No
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
 </div>
 </p>

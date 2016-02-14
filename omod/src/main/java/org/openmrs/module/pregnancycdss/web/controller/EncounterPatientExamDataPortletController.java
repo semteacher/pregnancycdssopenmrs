@@ -22,6 +22,9 @@ import org.openmrs.module.pregnancycdss.PatientExamModel;
 import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -61,7 +64,7 @@ public class EncounterPatientExamDataPortletController extends PortletController
             //List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getPatientExamByPatient(e.getPatient());
             List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(e);
             model.put("patientexamformslist", patientexamformslist);
-            if (request.getParameter("gaesubmit")!= null){
+            if (request.getParameter("gaesubmit") != null) {
                 List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
                 model.put("symptomList", symptomslist);
                 //TODO: call GAE submit method there! responce must be interupted by the JavaScript function in the portlet jsp 
@@ -75,10 +78,10 @@ public class EncounterPatientExamDataPortletController extends PortletController
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ModelAndView mav = super.handleRequest(request, response);
         //if (request.getParameter("gaesubmit")!= null){
-            //List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
-            //this.populateGAEDecissinModel(request, null);
-            
-            //.model.put("symptomList", symptomslist);
+        //List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
+        //this.populateGAEDecissinModel(request, null);
+
+        //.model.put("symptomList", symptomslist);
         //}
         //mav.setViewName(viewName);
         return mav;
@@ -88,4 +91,5 @@ public class EncounterPatientExamDataPortletController extends PortletController
         List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
         model.put("symptomList", symptomslist);
     }
+
 }

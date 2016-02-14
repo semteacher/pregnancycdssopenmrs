@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
@@ -36,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -134,7 +137,7 @@ public class PatientExamFormController {
                 patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(examFormId);
                 //prepare patient diseases probability list
                 Set<DiseasesProbability> patientDiseasesProbability = PrepareSetPatientDiseasesProbability();
-                
+
                 //get patient symptom list
                 List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
                 //create map to store form responce data
@@ -194,7 +197,7 @@ public class PatientExamFormController {
                                             //symptom option is in database but not in POST:it is unchecked and will be deleted
                                             patientSymptomList.remove(currSymptOptInDB);
                                             patientExamForm.setExamDate(new Date());
-                                            patientExamForm.setExamUserId(Context.getAuthenticatedUser());                                            
+                                            patientExamForm.setExamUserId(Context.getAuthenticatedUser());
                                             patientExamForm.setPatientSymptoms(patientSymptomList);
                                             Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                             System.out.println(currSymptOptInDB.getSymptOptId().toString() + " delete and save ok");
@@ -214,26 +217,26 @@ public class PatientExamFormController {
                                 }
                             }
                         } else {
-                            System.out.println("multi-NO");                            
-                            List<Integer> patientSymptomsBySymptomIdPosList = getSymtomsPos(patientSymptomList, symptomlist.get(sympt).getSymptId());                            
+                            System.out.println("multi-NO");
+                            List<Integer> patientSymptomsBySymptomIdPosList = getSymtomsPos(patientSymptomList, symptomlist.get(sympt).getSymptId());
                             if (patientSymptomsBySymptomIdPosList.size() > 0) {
                                 if (patientSymptomsBySymptomIdPosList.size() > 1) {
                                     //delete all and insert new one
-                                    for (Integer tmpPos : patientSymptomsBySymptomIdPosList) {                                        
+                                    for (Integer tmpPos : patientSymptomsBySymptomIdPosList) {
                                         patientSymptomList.remove(tmpPos.intValue());
                                     }
                                     //Insert one new record
                                     System.out.println(selIntList.get(0) + " symptOptId will be added");
                                     patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
                                     patientExamForm.setExamDate(new Date());
-                                    patientExamForm.setExamUserId(Context.getAuthenticatedUser()); 
+                                    patientExamForm.setExamUserId(Context.getAuthenticatedUser());
                                     patientExamForm.setPatientSymptoms(patientSymptomList);
                                     Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                     System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
                                 } else {
                                     //Update single record
                                     if (patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).getSymptOptId().intValue() != selIntList.get(0).intValue()) {
-                                        System.out.println(selIntList.get(0) + " symptOptId will be updated");                                        
+                                        System.out.println(selIntList.get(0) + " symptOptId will be updated");
                                         patientSymptomList.get(patientSymptomsBySymptomIdPosList.get(0).intValue()).setSymptOptId(selIntList.get(0));
                                         patientExamForm.setExamDate(new Date());
                                         patientExamForm.setExamUserId(Context.getAuthenticatedUser());
@@ -249,7 +252,7 @@ public class PatientExamFormController {
                                 System.out.println(selIntList.get(0) + " symptOptId will be added");
                                 patientSymptomList.add(new PatientSymptomByExamModel(patientExamForm, patientid, Context.getAuthenticatedUser().getUserId(), symptomlist.get(sympt).getSymptCategory().getSymptCatId(), symptomlist.get(sympt).getSymptId(), selIntList.get(0)));
                                 patientExamForm.setExamDate(new Date());
-                                patientExamForm.setExamUserId(Context.getAuthenticatedUser());  
+                                patientExamForm.setExamUserId(Context.getAuthenticatedUser());
                                 patientExamForm.setPatientSymptoms(patientSymptomList);
                                 Context.getService(pregnancycdssserviceService.class).savePatientExam(patientExamForm);
                                 System.out.println(selIntList.get(0) + " symptOptId added and saved ok");
@@ -309,7 +312,7 @@ public class PatientExamFormController {
 //			}
         }
         //go back to encounter
-        return "redirect:/admin/encounters/encounter.form?encounterId="+encounterId.intValue();
+        return "redirect:/admin/encounters/encounter.form?encounterId=" + encounterId.intValue();
     }
 
     public List<Integer> getSymtomsPos(List<PatientSymptomByExamModel> patientSymptomsList, Integer symptomId) {
@@ -326,54 +329,135 @@ public class PatientExamFormController {
         }
         return symtomsPos;
     }
-    
+
     //fill patient diseases probability list with default values
-    public Set<DiseasesProbability> PrepareSetPatientDiseasesProbability(){
+    public Set<DiseasesProbability> PrepareSetPatientDiseasesProbability() {
         Set<DiseasesProbability> patientDiseasesProbability = new HashSet<DiseasesProbability>();
         List<DiseasesModel> diseaseslist = Context.getService(pregnancycdssserviceService.class).getAllDiseases();
-        for (DiseasesModel currDisease:diseaseslist) {
+        for (DiseasesModel currDisease : diseaseslist) {
             DiseasesProbability tmpDiseasesProbability = new DiseasesProbability(currDisease.getDiseasesId(), currDisease.getDiseasesName(), new Float(1), new Float(1), 0);
             patientDiseasesProbability.add(tmpDiseasesProbability);
         }
         return patientDiseasesProbability;
     }
-    
+
     //calculate diseases probability by Guliaev algorithm
     public void FillSetPatientDiseasesProbability(Set<DiseasesProbability> patientDiseasesProbability, List<Integer> selIntList) {
         //process all selections
-        for (Integer selectedSymptOptId:selIntList) {
+        for (Integer selectedSymptOptId : selIntList) {
             //TODO:get list of diseases related to given selected symptom option ID
             List<DiseasesSymptOptModel> diseasesSymptOptlist = Context.getService(pregnancycdssserviceService.class).getDiseasesSymptOptBySymptoptId(selectedSymptOptId);
             //check is it diseases list exist
             if (diseasesSymptOptlist.size() > 0) {
                 //process all selected diseases
-                for (DiseasesSymptOptModel tmpDiseasesSymptOpt:diseasesSymptOptlist) {
+                for (DiseasesSymptOptModel tmpDiseasesSymptOpt : diseasesSymptOptlist) {
                     //process all patient diseases list items
-                    for (DiseasesProbability tmpDiseasesProbability:patientDiseasesProbability) {
-                        if (tmpDiseasesProbability.getDiseaseId().intValue()==tmpDiseasesSymptOpt.getDisiase().getDiseasesId().intValue()) {
-                            tmpDiseasesProbability.setPy(tmpDiseasesProbability.getPy().floatValue()*tmpDiseasesSymptOpt.getPy().floatValue());
+                    for (DiseasesProbability tmpDiseasesProbability : patientDiseasesProbability) {
+                        if (tmpDiseasesProbability.getDiseaseId().intValue() == tmpDiseasesSymptOpt.getDisiase().getDiseasesId().intValue()) {
+                            tmpDiseasesProbability.setPy(tmpDiseasesProbability.getPy().floatValue() * tmpDiseasesSymptOpt.getPy().floatValue());
                             //tmpDiseasesProbability.pn.floatValue() = tmpDiseasesProbability.pn.floatValue()*tmpDiseasesSymptOpt.pn.floatValue();
-                            tmpDiseasesProbability.setPn(tmpDiseasesProbability.getPn().floatValue()*tmpDiseasesSymptOpt.getPn().floatValue());
+                            tmpDiseasesProbability.setPn(tmpDiseasesProbability.getPn().floatValue() * tmpDiseasesSymptOpt.getPn().floatValue());
                             //tmpDiseasesProbability.selCount.intValue() = tmpDiseasesProbability.selCount.intValue()+1;
-                            tmpDiseasesProbability.setSelcount(tmpDiseasesProbability.getSelcount().intValue()+1);
+                            tmpDiseasesProbability.setSelcount(tmpDiseasesProbability.getSelcount().intValue() + 1);
                         }
                     }
                 }
             }
         }
-    
+
     }
-    
+
     //get expected disease from the set
-    public String GetExpectedDisease(Set<DiseasesProbability> diseasesProbabilityList){
+    public String GetExpectedDisease(Set<DiseasesProbability> diseasesProbabilityList) {
         String expectedDisease = "Not defined!";
         Integer maxSelCount = 0;
-        for (DiseasesProbability diseasesProbability:diseasesProbabilityList) {
-            if (diseasesProbability.getSelcount().intValue()>maxSelCount.intValue()){
+        for (DiseasesProbability diseasesProbability : diseasesProbabilityList) {
+            if (diseasesProbability.getSelcount().intValue() > maxSelCount.intValue()) {
                 maxSelCount = diseasesProbability.getSelcount().intValue();
                 expectedDisease = diseasesProbability.getDisiaseName();
             }
         }
         return expectedDisease;
+    }
+
+    //Convert patient form data to JSON
+    @RequestMapping(value = "/module/pregnancycdss/patientExamForm.json", method = RequestMethod.GET)
+    public @ResponseBody
+    String getPatientDataJson2(HttpServletRequest request, @RequestParam(value = "examId") String examId, @RequestParam(value = "encounterId") String encounterId,
+            @RequestParam(value = "patientId") String patientId) {
+        if (Context.isAuthenticated()) {
+            System.out.println("portlet-ajax_examId=" + examId);
+            System.out.println("portlet-ajax_encounterId=" + encounterId);
+            System.out.println("portlet-ajax_patientId=" + patientId);
+            //init json object
+            JSONObject jsonPatientGAEDataObj = new JSONObject();
+
+            JSONObject clientDescription = new JSONObject();
+            clientDescription.put("url", request.getContextPath().toString());
+            clientDescription.put("form_name", "Pregnancy CDSS Form");
+            clientDescription.put("patient_id", patientId);
+            clientDescription.put("encounter_id", encounterId);
+            clientDescription.put("exam_id", examId);
+
+            JSONArray clientDecease = new JSONArray();
+
+            JSONArray clientData = new JSONArray();
+            
+            //Get patient
+            PatientExamModel patientExamForm = null;
+            patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(Integer.parseInt(examId));
+            //get patient symptom list
+            List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
+            //get symptom list
+            List<SymptomModel> symptomList = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
+            //process all symptoms
+            for (SymptomModel tmpSymptom : symptomList) {
+                if (tmpSymptom != null) {
+                    //prepare arrayitem (data row) object
+                    JSONObject symptOptPatientRecord = new JSONObject();
+                    //check symptom type
+                    if (tmpSymptom.getIsMulti()) {
+                        //get symptom options list
+                        List<SymptomOptionModel> symptOptionList = tmpSymptom.getSymptOpt();
+                        //precess each symptom option
+                        for (SymptomOptionModel tmpSymptOption : symptOptionList) {
+                            if (tmpSymptOption != null) {
+                                //will look like YEX/NO mode in GAEDecission tree 
+                                symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId());
+                                symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName());
+                                symptOptPatientRecord.put("opt_id", patientId);
+                                symptOptPatientRecord.put("opt_name", tmpSymptOption.getOptName());
+                                //add array item (data row)
+                                clientData.add(symptOptPatientRecord);
+                                symptOptPatientRecord.clear();
+                            }
+                        }
+                    } else {
+                        SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSelectedSymptomOption(patientId, encounterId,tmpSymptom.getSymptId());
+                        //will look like multychoice mode in GAEDecission tree 
+                        symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId());
+                        symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName());
+                        symptOptPatientRecord.put("opt_id", patientId);
+                        symptOptPatientRecord.put("opt_name", encounterId);
+                        //add array item (data row)
+                        clientData.add(symptOptPatientRecord);
+                        symptOptPatientRecord.clear();
+                    }
+                }
+            }
+            //construct object
+            //TODO: must be an array row???
+            jsonPatientGAEDataObj.put("client_description", clientDescription);
+            jsonPatientGAEDataObj.put("client_decease", clientDecease);
+            jsonPatientGAEDataObj.put("client_data", clientData);
+
+            String result = jsonPatientGAEDataObj.toJSONString();
+            System.out.println("portlet-ajax_json= " + result);
+            //String result = "<br>portlet-ajax_examId=<b>" + examId + "</b><br>portlet-ajax_encounterId=<b>" + encounterId + "</b><br>portlet-ajax_patientId=<b>" + patientId + "</b>";
+            //System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller..");
+            return result;
+        } else {
+            return "";
+        }
     }
 }

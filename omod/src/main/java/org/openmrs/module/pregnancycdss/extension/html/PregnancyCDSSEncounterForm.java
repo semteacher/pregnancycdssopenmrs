@@ -43,6 +43,7 @@ public class PregnancyCDSSEncounterForm extends org.openmrs.module.web.extension
     @Override
     public String getPortletUrl() {
         //return "pregnancycdss.portlet";
+        System.out.println("999: PregnancyCDSSEncounterForm: get portlet URL...");
         return "encounterPatientExamData.portlet";
     }
 
