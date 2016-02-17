@@ -403,12 +403,12 @@ public class PatientExamFormController {
             JSONArray clientDecease = new JSONArray();
 
             JSONArray clientData = new JSONArray();
-            
+
             //Get patient
             PatientExamModel patientExamForm = null;
             patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(Integer.parseInt(examId));
             //get patient symptom list
-            List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
+            //List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
             //get symptom list
             List<SymptomModel> symptomList = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
             //process all symptoms
@@ -432,21 +432,28 @@ public class PatientExamFormController {
                                 symptOptPatientRecord.put("opt_name", tmpSymptOption.getOptName().toString());
                                 //add array item (data row)
                                 clientData.add(symptOptPatientRecord);
-                                symptOptPatientRecord.clear();
+                                //symptOptPatientRecord.clear();
                             }
                         }
                     } else {
                         //TODO:implement
                         //SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSelectedSymptomOption(patientId, encounterId, tmpSymptom.getSymptId());
-                        Integer tmpSelectedSymptOptId = patientExamForm.getSelectedSymptomOption(tmpSymptom.getSymptId());
+                        String tmpSymptOptName = null;
+                        //get selected option for iven symptom
+                        Integer tmpSelectedSymptOptId = patientExamForm.getFirstSelectedSymptomOption(tmpSymptom.getSymptId());
+                        //get symptom name fr the existed selections
+                        if (tmpSelectedSymptOptId != null) {
+                            SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSymptOptionById(tmpSelectedSymptOptId);
+                            tmpSymptOptName = tmpSelectedSymptOpt.getOptName().toString();
+                        }
                         //will look like multichoice mode in GAEDecission tree 
                         symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId().intValue());
                         symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName().toString());
                         symptOptPatientRecord.put("opt_id", tmpSelectedSymptOptId);
-                        symptOptPatientRecord.put("opt_name", encounterId);
+                        symptOptPatientRecord.put("opt_name", tmpSymptOptName);
                         //add array item (data row)
                         clientData.add(symptOptPatientRecord);
-                        symptOptPatientRecord.clear();
+                        //symptOptPatientRecord.clear();
                     }
                 }
             }
@@ -463,7 +470,7 @@ public class PatientExamFormController {
             //System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller..");
             return result;
         } else {
-            return "";
+            return null;
         }
     }
 }

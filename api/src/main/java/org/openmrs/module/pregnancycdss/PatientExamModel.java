@@ -264,17 +264,20 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         return super.getUuid();
     }
 
-    public Integer getSelectedSymptomOption(Integer symptomId) {
-        Integer tmpSymptOptId = null;
+    /** 
+     * Return the first selected symptom option ID for the given symptomId
+     * 
+     * @param      symptomId  vaue of the <code>Syptom ID</code> for search
+     */
+    public Integer getFirstSelectedSymptomOption(Integer symptomId) {
         for (PatientSymptomByExamModel tmpPatientSymptom : this.patientSymptoms) {
             if (tmpPatientSymptom != null) {
-                Boolean testres = tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue();
-                if (testres) {
-                    //tmpSymptOptId = tmpPatientSymptom.getSymptOptId();
+                //Boolean testres = tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue();
+                if (tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue()) {
                     return tmpPatientSymptom.getSymptOptId();
                 }
             }
         }
-         return null;
-    }    
+        return null;
+    }
 }

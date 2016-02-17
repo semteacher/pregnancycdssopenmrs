@@ -16,7 +16,9 @@
             type : 'GET',   
             url : myurl,   
             data : 'examId=' + examId + '&encounterId=' + encounterId + '&patientId=' + patientId,  
-            success : function(response) {  
+            dataType : 'json',
+            success : function(response) {
+                console.log(response);
                 alert(response);   
             },  
             error : function(e) {  

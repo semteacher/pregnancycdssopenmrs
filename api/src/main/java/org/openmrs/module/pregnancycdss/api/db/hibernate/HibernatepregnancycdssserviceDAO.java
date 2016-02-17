@@ -223,4 +223,15 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         return diseasesSymptOptBySymptoptIdlist;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public SymptomOptionModel getSymptOptionById(Integer tmpSelectedSymptOptId) {
+        System.out.println("semteacher: 20010. getSymptOptionById dao-getting session...");
+        log.debug("semteacher: 20010. getSymptOptionById dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        SymptomOptionModel tmpSymptomOption = null;
+        tmpSymptomOption = (SymptomOptionModel) session.createCriteria(SymptomOptionModel.class).add(Restrictions.eq("symptOptId", tmpSelectedSymptOptId)).uniqueResult();
+        return tmpSymptomOption;
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
