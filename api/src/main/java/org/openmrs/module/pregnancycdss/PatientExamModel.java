@@ -44,14 +44,14 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
 
     public PatientExamModel() {
     }
-    
-        public PatientExamModel(Date examDate, User examUserId, Patient patientId, Encounter encounterId) {
+
+    public PatientExamModel(Date examDate, User examUserId, Patient patientId, Encounter encounterId) {
         this.examDate = examDate;
         this.patientId = patientId;
         this.examUserId = examUserId;
         this.encounterId = encounterId;
     }
-        
+
     public PatientExamModel(Date examDate, Patient patientId, User examUserId, Encounter encounterId, List<PatientSymptomByExamModel> patientSymptoms) {
         this.examDate = examDate;
         this.patientId = patientId;
@@ -59,7 +59,7 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
         this.encounterId = encounterId;
         this.patientSymptoms = patientSymptoms;
     }
-    
+
     public List<PatientSymptomByExamModel> getPatientSymptoms() {
         return patientSymptoms;
     }
@@ -263,4 +263,18 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     public String getUuid() {
         return super.getUuid();
     }
+
+    public Integer getSelectedSymptomOption(Integer symptomId) {
+        Integer tmpSymptOptId = null;
+        for (PatientSymptomByExamModel tmpPatientSymptom : this.patientSymptoms) {
+            if (tmpPatientSymptom != null) {
+                Boolean testres = tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue();
+                if (testres) {
+                    //tmpSymptOptId = tmpPatientSymptom.getSymptOptId();
+                    return tmpPatientSymptom.getSymptOptId();
+                }
+            }
+        }
+         return null;
+    }    
 }

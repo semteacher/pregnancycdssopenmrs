@@ -68,4 +68,6 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     PatientExamModel savePatientExam(PatientExamModel patientExam)
 			throws APIException;
     PatientExamModel getPatientExamById(Integer patientExamFormId);
+
+    public Boolean isSymptomOptionSelected(String patientId, String encounterId, Integer symptId);
 }

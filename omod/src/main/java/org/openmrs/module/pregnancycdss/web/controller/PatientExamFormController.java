@@ -389,7 +389,8 @@ public class PatientExamFormController {
             System.out.println("portlet-ajax_examId=" + examId);
             System.out.println("portlet-ajax_encounterId=" + encounterId);
             System.out.println("portlet-ajax_patientId=" + patientId);
-            //init json object
+            //init json objects: array and row
+            JSONArray jsonPatientGAEDataArr = new JSONArray();
             JSONObject jsonPatientGAEDataObj = new JSONObject();
 
             JSONObject clientDescription = new JSONObject();
@@ -422,22 +423,26 @@ public class PatientExamFormController {
                         //precess each symptom option
                         for (SymptomOptionModel tmpSymptOption : symptOptionList) {
                             if (tmpSymptOption != null) {
-                                //will look like YEX/NO mode in GAEDecission tree 
-                                symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId());
-                                symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName());
+                                //will look like YES/NO mode in GAEDecission tree
+                                //TODO:implement
+                                //Boolean isSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).isSymptomOptionSelected(patientId, encounterId, tmpSymptom.getSymptId());
+                                symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId().intValue());
+                                symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName().toString());
                                 symptOptPatientRecord.put("opt_id", patientId);
-                                symptOptPatientRecord.put("opt_name", tmpSymptOption.getOptName());
+                                symptOptPatientRecord.put("opt_name", tmpSymptOption.getOptName().toString());
                                 //add array item (data row)
                                 clientData.add(symptOptPatientRecord);
                                 symptOptPatientRecord.clear();
                             }
                         }
                     } else {
-                        SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSelectedSymptomOption(patientId, encounterId,tmpSymptom.getSymptId());
-                        //will look like multychoice mode in GAEDecission tree 
-                        symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId());
-                        symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName());
-                        symptOptPatientRecord.put("opt_id", patientId);
+                        //TODO:implement
+                        //SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSelectedSymptomOption(patientId, encounterId, tmpSymptom.getSymptId());
+                        Integer tmpSelectedSymptOptId = patientExamForm.getSelectedSymptomOption(tmpSymptom.getSymptId());
+                        //will look like multichoice mode in GAEDecission tree 
+                        symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId().intValue());
+                        symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName().toString());
+                        symptOptPatientRecord.put("opt_id", tmpSelectedSymptOptId);
                         symptOptPatientRecord.put("opt_name", encounterId);
                         //add array item (data row)
                         clientData.add(symptOptPatientRecord);
@@ -445,13 +450,14 @@ public class PatientExamFormController {
                     }
                 }
             }
-            //construct object
-            //TODO: must be an array row???
+            //construct row object
             jsonPatientGAEDataObj.put("client_description", clientDescription);
             jsonPatientGAEDataObj.put("client_decease", clientDecease);
             jsonPatientGAEDataObj.put("client_data", clientData);
+            //insert row into the array
+            jsonPatientGAEDataArr.add(jsonPatientGAEDataObj);
 
-            String result = jsonPatientGAEDataObj.toJSONString();
+            String result = jsonPatientGAEDataArr.toJSONString();
             System.out.println("portlet-ajax_json= " + result);
             //String result = "<br>portlet-ajax_examId=<b>" + examId + "</b><br>portlet-ajax_encounterId=<b>" + encounterId + "</b><br>portlet-ajax_patientId=<b>" + patientId + "</b>";
             //System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller..");
