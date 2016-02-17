@@ -64,32 +64,7 @@ public class EncounterPatientExamDataPortletController extends PortletController
             //List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getPatientExamByPatient(e.getPatient());
             List<PatientExamModel> patientexamformslist = Context.getService(pregnancycdssserviceService.class).getPatientExamByEncouter(e);
             model.put("patientexamformslist", patientexamformslist);
-            if (request.getParameter("gaesubmit") != null) {
-                List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
-                model.put("symptomList", symptomslist);
-                //TODO: call GAE submit method there! responce must be interupted by the JavaScript function in the portlet jsp 
-            }
         }
-
-// your code here
-    }
-
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ModelAndView mav = super.handleRequest(request, response);
-        //if (request.getParameter("gaesubmit")!= null){
-        //List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
-        //this.populateGAEDecissinModel(request, null);
-
-        //.model.put("symptomList", symptomslist);
-        //}
-        //mav.setViewName(viewName);
-        return mav;
-    }
-
-    protected void populateGAEDecissinModel(HttpServletRequest request, Map<String, Object> model) {
-        List<SymptomModel> symptomslist = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
-        model.put("symptomList", symptomslist);
     }
 
 }
