@@ -70,4 +70,6 @@ public interface pregnancycdssserviceService extends OpenmrsService {
     PatientExamModel getPatientExamById(Integer patientExamFormId);
 
     public SymptomOptionModel getSymptOptionById(Integer tmpSelectedSymptOptId);
+
+    public DiseasesModel getDisease(Integer diseaseId);
 }

@@ -60,6 +60,7 @@
     </openmrs:hasPrivilege>
 </div>
 </p>
+<hr>
 <div id="ptientExamTable">
     <table id="patientexamformslistTable" class="display">
         <thead>
@@ -134,6 +135,7 @@
         </tbody>
     </table>
 </div>
+<br><hr>
 <p>
 <div id="addPtientExamForm">
     <openmrs:hasPrivilege privilege="Add Observations">

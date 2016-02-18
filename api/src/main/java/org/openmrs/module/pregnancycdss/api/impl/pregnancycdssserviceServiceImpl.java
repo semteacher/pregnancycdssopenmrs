@@ -143,4 +143,12 @@ public class pregnancycdssserviceServiceImpl extends BaseOpenmrsService implemen
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public DiseasesModel getDisease(Integer diseaseId) {
+        System.out.println("semteacher: 11. getDisease Calling dao from service...");
+        log.debug("semteacher: 11. getDisease Calling dao from service...");
+        return getDao().getDisease(diseaseId);
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

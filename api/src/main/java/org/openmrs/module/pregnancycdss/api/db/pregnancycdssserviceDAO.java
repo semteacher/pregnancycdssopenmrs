@@ -51,4 +51,6 @@ public interface pregnancycdssserviceDAO {
     public List<DiseasesSymptOptModel> getDiseasesSymptOptBySymptoptId(Integer selectedSymptOptId);
 
     public SymptomOptionModel getSymptOptionById(Integer tmpSelectedSymptOptId);
+
+    public DiseasesModel getDisease(Integer diseaseId);
 }

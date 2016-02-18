@@ -207,8 +207,8 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         Set<DiseasesSymptOptModel> diseasessymptoptlist = (Set) session.createCriteria(DiseasesSymptOptModel.class).list();
         //List<SymptomModel> symptomslist = session.createCriteria(SymptomModel.class).addOrder(Order.asc("idOrder")).list();
 
-        System.out.println("semteacher: 21004. dao-callin data succesfull... object count:"+diseasessymptoptlist.size());
-        log.debug("semteacher: 21004. dao-callin data succesfull...object count:"+diseasessymptoptlist.size());
+        System.out.println("semteacher: 21004. dao-callin data succesfull... object count:" + diseasessymptoptlist.size());
+        log.debug("semteacher: 21004. dao-callin data succesfull...object count:" + diseasessymptoptlist.size());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         return diseasessymptoptlist;
     }
@@ -232,6 +232,17 @@ public class HibernatepregnancycdssserviceDAO implements pregnancycdssserviceDAO
         SymptomOptionModel tmpSymptomOption = null;
         tmpSymptomOption = (SymptomOptionModel) session.createCriteria(SymptomOptionModel.class).add(Restrictions.eq("symptOptId", tmpSelectedSymptOptId)).uniqueResult();
         return tmpSymptomOption;
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public DiseasesModel getDisease(Integer diseaseId) {
+        System.out.println("semteacher: 12. getDisease dao-getting session...");
+        log.debug("semteacher: 12. getDisease dao-getting session...");
+        Session session = sessionFactory.getCurrentSession();
+        DiseasesModel tmpDisease = null;
+        tmpDisease = (DiseasesModel) session.createCriteria(DiseasesModel.class).add(Restrictions.eq("diseasesId", diseaseId)).uniqueResult();
+        return tmpDisease;
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

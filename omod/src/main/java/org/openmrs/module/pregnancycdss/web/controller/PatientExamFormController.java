@@ -19,8 +19,6 @@ import org.springframework.stereotype.Controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
@@ -34,11 +32,9 @@ import org.openmrs.module.pregnancycdss.SymptomModel;
 import org.openmrs.module.pregnancycdss.SymptomOptionModel;
 import org.openmrs.module.pregnancycdss.api.pregnancycdssserviceService;
 import org.springframework.ui.ModelMap;
-//import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -54,19 +50,15 @@ public class PatientExamFormController {
     @RequestMapping(value = "/module/pregnancycdss/patientExamForm", method = RequestMethod.GET)
     public void showForm(ModelMap model, HttpServletRequest request, @RequestParam("patientExamFormId") Integer patientExamFormId, @RequestParam("encounterId") Integer encounterId, @RequestParam("patientId") Integer patientId) {
         if (Context.isAuthenticated()) {
-//            Object oe = request.getAttribute("org.openmrs.portlet.encounterId");
-//            Encounter e = null;
-//            if (oe != null) {
-//                Integer EncounterId = (Integer) oe;
-//            }
+            //set id's
             model.put("encounterId", encounterId);
             model.put("patientId", patientId);
-
+            //get patient
             Patient pat = null;
             pat = Context.getPatientService().getPatient(patientId);
             System.out.println("1610: patient data: " + pat.toString());
             model.put("patientdata", pat);
-
+            //get encounter
             Encounter enc = null;
             enc = Context.getEncounterService().getEncounter(encounterId);
             System.out.println("1620: encounter data: " + enc.toString());
@@ -75,7 +67,6 @@ public class PatientExamFormController {
             List<SymptCategoryModel> symptcategorylist = Context.getService(pregnancycdssserviceService.class).getAllSymptCategories();
             System.out.println("semteacher: 1630. Got symptcategorylist from db: ok or not?...");
             System.out.println(symptcategorylist.get(0).getCatName());
-            //model.addAttribute("symptcategorylist", Context.getService(pregnancycdssserviceService.class).getAllSymptCategories());
             model.put("symptcategorylist", symptcategorylist);
             System.out.println("semteacher: 1640. completed model variable: ok or not?...");
             System.out.println(model.toString());
@@ -85,8 +76,6 @@ public class PatientExamFormController {
             if (patientExamFormId != null) {
                 patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(patientExamFormId);
 
-            } else {
-                //PatientExamModel patientExamForm = new PatientExamModel();
             }
             //texting
 //            PatientExamModel patientExamForm = new PatientExamModel(new Date(), Context.getAuthenticatedUser(), pat, enc);
@@ -114,10 +103,9 @@ public class PatientExamFormController {
             System.out.println(model.toString());
             List<String> selectedSymptOpt = new ArrayList();
             model.put("selectedSymptOpt", selectedSymptOpt);
-            //model.put("Current encounter is:", Context.getUserContext().getLocation());
-//            if (request.getParameter("patientId") != null) {
-//                model.put("appointment", getAppointment(null, Integer.parseInt(request.getParameter("patientId"))));
-//            }
+            //add diseases list to the form model
+            List<DiseasesModel> diseaseslist = Context.getService(pregnancycdssserviceService.class).getAllDiseases();
+            model.put("diseasesList", diseaseslist);
         }
     }
 
@@ -127,7 +115,7 @@ public class PatientExamFormController {
             @RequestParam(value = "examId", required = false) Integer examFormId,
             @RequestParam(value = "encountId", required = false) Integer encounterId) throws Exception {
 
-        HttpSession httpSession = request.getSession();
+        //HttpSession httpSession = request.getSession();
 
         if (Context.isAuthenticated()) {
             if (request.getParameter("save") != null) {
@@ -137,7 +125,15 @@ public class PatientExamFormController {
                 patientExamForm = Context.getService(pregnancycdssserviceService.class).getPatientExamById(examFormId);
                 //prepare patient diseases probability list
                 Set<DiseasesProbability> patientDiseasesProbability = PrepareSetPatientDiseasesProbability();
-
+                //set final diseases if exist
+                Integer diseaseId = new Integer(request.getParameter("finaldeceasedd"));
+                String diseaseName = null;
+                if (diseaseId > 0) {
+                    DiseasesModel disease = Context.getService(pregnancycdssserviceService.class).getDisease(diseaseId);
+                    diseaseName = disease.getDiseasesName().toString();
+                }
+                patientExamForm.setFinaldiseaseId(diseaseId);
+                patientExamForm.setFinalDisease(diseaseName);
                 //get patient symptom list
                 List<PatientSymptomByExamModel> patientSymptomList = patientExamForm.getPatientSymptoms();
                 //create map to store form responce data

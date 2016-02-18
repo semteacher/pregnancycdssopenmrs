@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openmrs.module</groupId>
         <artifactId>pregnancycdss</artifactId>
-        <version>1.5.133-SNAPSHOT</version>
+        <version>1.5.137-SNAPSHOT</version>
     </parent>
 
     <artifactId>pregnancycdss-omod</artifactId>
@@ -206,5 +206,5 @@
             </plugin>
         </plugins>
     </build>
-    <version>1.5.133-SNAPSHOT</version>
+    <version>1.5.137-SNAPSHOT</version>
 </project>

@@ -17,7 +17,31 @@
         <input type="hidden" name="examId" value="${patientExamForm.examId}" />
         <input type="hidden" name="isFirstPregnancy" value="${patientExamForm.isFirstPregnancy}" />
         <input type="hidden" name="process" value="true" />       
-        
+        <c:choose>
+            <c:when test="${patientExamForm.finaldiseaseId < 1}">
+                <c:set var="first_row_sel" scope="page" value="selected"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="first_row_sel" scope="page" value=""/>
+            </c:otherwise>
+        </c:choose> 
+        <div class="bold warningtext deceases">Final Disease (if known)???: 
+            <select id="final_deceasedd" name="finaldeceasedd">
+                <option value="0" ${first_row_sel}>---Choose Final Disease:---</option>
+                <c:forEach var="disease" items="${diseasesList}">
+                    <c:choose>
+                        <c:when test="${patientExamForm.finaldiseaseId == disease.diseasesId}">
+                            <c:set var="dis_row_sel" scope="page" value="selected"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="dis_row_sel" scope="page" value=""/>
+                        </c:otherwise>
+                    </c:choose> 
+                    <option value="${disease.diseasesId}" ${dis_row_sel}>${disease.diseasesName}</option>
+                </c:forEach>
+            </select>
+        </div>
+
         <input type="submit" class="saveButton" name="save" value="<spring:message code='pregnancycdss.patientExamForm.Edit.save'/>" />
         <table id="symptCatTable"class="display">
             <tbody>
