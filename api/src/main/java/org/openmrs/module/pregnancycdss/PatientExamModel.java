@@ -272,9 +272,24 @@ public class PatientExamModel extends BaseOpenmrsObject implements Serializable 
     public Integer getFirstSelectedSymptomOption(Integer symptomId) {
         for (PatientSymptomByExamModel tmpPatientSymptom : this.patientSymptoms) {
             if (tmpPatientSymptom != null) {
-                //Boolean testres = tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue();
                 if (tmpPatientSymptom.getSymptomId().intValue() == symptomId.intValue()) {
                     return tmpPatientSymptom.getSymptOptId();
+                }
+            }
+        }
+        return null;
+    }
+
+    /** 
+     * Return same ID value if given symptom option is exist in patient exam list. Other hand return null
+     * 
+     * @param      symptOptId  vaue of the <code>Syptom Option ID</code> for search
+     */
+    public Integer isSymptomOptionSelected(Integer symptOptId) {
+        for (PatientSymptomByExamModel tmpPatientSymptom : this.patientSymptoms) {
+            if (tmpPatientSymptom != null) {
+                if (tmpPatientSymptom.getSymptOptId().intValue() == symptOptId.intValue()) {
+                    return symptOptId;
                 }
             }
         }

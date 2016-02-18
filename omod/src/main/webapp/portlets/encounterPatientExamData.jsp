@@ -8,22 +8,42 @@
     $j(document).ready(function() {
         $j('#patientexamformslistTable').dataTable();
     } );
-    var myurl2 = '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree.json';
-    function gaeDecisionTreeSubmitFunction2(examId,encounterId,patientId){
-        alert('examId='+examId+', encounterId='+encounterId+', patientId='+patientId+ ','+myurl2);
+    function submitData2GAE(formData){
+        alert('formData='+JSON.stringify(formData));
         jQuery.ajax({  
             type : 'GET',   
-            url : myurl2,   
+            url : 'http://contactmgr.loc/site/yii2curltest',   
+            data : formData,  
+            dataType : 'json',
+            success : function(response) {
+                var mystr = JSON.stringify(response);
+                console.log(response);
+                console.log(mystr);
+                alert(mystr);
+                //return response;
+            },  
+            error : function(e) {  
+                alert('Error: ' + e);
+                //return null;
+            }  
+        }); 
+    };
+    function gaeDecisionTreeSubmitFunction(examId,encounterId,patientId){
+        alert('examId='+examId+', encounterId='+encounterId+', patientId='+patientId);
+        jQuery.ajax({  
+            type : 'GET',   
+            url : '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree.json',   
             data : 'examId=' + examId + '&encounterId=' + encounterId + '&patientId=' + patientId,  
             dataType : 'json',
             success : function(response) {
                 var mystr = JSON.stringify(response);
                 console.log(response);
                 console.log(mystr);
-                alert(mystr);     
+                //alert(mystr);
+                submitData2GAE(response);
             },  
             error : function(e) {  
-                alert('Error: ' + e);   
+                alert('Error: ' + e);
             }  
         }); 
     };
@@ -52,8 +72,7 @@
                 <th>Final Disease</th>
                 <th>Expected Disease</th>
                 <th>DecisionTree Disease</th>
-                <th>submit to DecisionTree</th>
-                <th>submit GAE2</th>
+                <th>GAEDecisionTree submit</th>                
                 <th>Edit survey form </th>
                 <th>Delete survey form </th>
             </tr>
@@ -80,21 +99,10 @@
                     <td>${patientexamformlst.decisionTreeDiseasesList}</td>
 
                     <td>
-                        <div id="submitPtientExamForm2GAE1">
-                            <openmrs:hasPrivilege privilege="Add Observations">
-                                <div>
-                                    <a href="${pageContext.request.contextPath}/module/pregnancycdss/patientExamForm.decisionTreeGAE?patientExamFormId=${patientexamformlst.examId}&encounterId=${encounter.encounterId}&patientId=${encounter.patient.patientId}">
-                                        <spring:message code="pregnancycdss.patientExamForm.Submit.decisionTreeGAE"/>
-                                    </a>
-                                </div>
-                            </openmrs:hasPrivilege>
-                        </div>
-                    </td>
-                    <td>
                         <div id="submitPtientExamForm2GAE2">
                             <openmrs:hasPrivilege privilege="Add Observations">
                                 <div>
-                                    <input type="button" class="submitGAE" value="<spring:message code="pregnancycdss.patientExamForm.Submit.decisionTreeGAE"/>" onclick="gaeDecisionTreeSubmitFunction2(${patientexamformlst.examId}, ${encounter.encounterId}, ${encounter.patient.patientId})">
+                                    <input type="button" class="submitGAE" value="<spring:message code="pregnancycdss.patientExamForm.Submit.decisionTreeGAE"/>" onclick="gaeDecisionTreeSubmitFunction(${patientexamformlst.examId}, ${encounter.encounterId}, ${encounter.patient.patientId})">
                                 </div>
                             </openmrs:hasPrivilege>
                         </div>
