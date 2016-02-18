@@ -32,7 +32,7 @@
         alert('examId='+examId+', encounterId='+encounterId+', patientId='+patientId);
         jQuery.ajax({  
             type : 'GET',   
-            url : '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree.json',   
+            url : '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree/single.json',   
             data : 'examId=' + examId + '&encounterId=' + encounterId + '&patientId=' + patientId,  
             dataType : 'json',
             success : function(response) {

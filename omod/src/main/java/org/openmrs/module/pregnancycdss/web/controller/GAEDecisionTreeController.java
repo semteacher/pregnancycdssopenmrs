@@ -32,7 +32,8 @@ public class GAEDecisionTreeController {
     protected final Log log = LogFactory.getLog(getClass());
 
     //Convert patient form data to JSON
-    @RequestMapping(value = "/module/pregnancycdss/gAEDecisionTree.json", method = RequestMethod.GET)
+    //@RequestMapping(value = "/module/pregnancycdss/gAEDecisionTree.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/module/pregnancycdss/gAEDecisionTree/single.json", method = RequestMethod.GET)
     public void getPatientDataJson2(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "examId") String examId, @RequestParam(value = "encounterId") String encounterId,
             @RequestParam(value = "patientId") String patientId) throws IOException {
         if (Context.isAuthenticated()) {
@@ -89,7 +90,7 @@ public class GAEDecisionTreeController {
                                 //symptOptPatientRecord.clear();
                             }
                         }
-                    } else {                        
+                    } else {
                         String tmpSymptOptName = null;
                         //get selected option for iven symptom
                         Integer tmpSelectedSymptOptId = patientExamForm.getFirstSelectedSymptomOption(tmpSymptom.getSymptId());
@@ -124,5 +125,109 @@ public class GAEDecisionTreeController {
         } else {
             //return null;
         }
+    }
+
+    //Convert patient form data to JSON
+    @RequestMapping(value = "/module/pregnancycdss/gAEDecisionTree/all.json", method = RequestMethod.GET)
+    public void getAllPatientDataJson(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (Context.isAuthenticated()) {
+            //init json objects: array and row
+            JSONArray jsonAllPatientGAEDataArr = new JSONArray();
+            //Get all patient records
+            List<PatientExamModel> patientExamFormsList = null;
+            patientExamFormsList = Context.getService(pregnancycdssserviceService.class).getAllPatientExamForms();
+            //process all patient forms
+            for (PatientExamModel patientExamForm : patientExamFormsList) {
+                //submit ONLY if the final decease is exist....
+                if (patientExamForm.getFinaldiseaseId() != null) {
+                    JSONObject jsonPatientGAEDataObj = null;
+                    jsonPatientGAEDataObj = getPatientExamFormRowData(patientExamForm, request.getContextPath().toString());
+                    if (jsonPatientGAEDataObj != null) {
+                        //insert row into the array
+                        jsonAllPatientGAEDataArr.add(jsonPatientGAEDataObj);
+                    }
+                }
+            }
+
+            String result = jsonAllPatientGAEDataArr.toJSONString();
+            System.out.println("all_forms-ajax_json= " + result);
+
+            //response.getWriter().write(result);
+            response.getWriter().println(jsonAllPatientGAEDataArr);
+        }
+    }
+
+    private JSONObject getPatientExamFormRowData(PatientExamModel patientExamForm, String formURL) {
+        JSONObject jsonPatientGAEDataObj = new JSONObject();
+
+        JSONObject clientDescription = new JSONObject();
+        clientDescription.put("url", formURL.toString());
+        clientDescription.put("form_name", "Pregnancy CDSS Form");
+        clientDescription.put("patient_id", patientExamForm.getPatientId().getPatientId().toString());
+        clientDescription.put("encounter_id", patientExamForm.getEncounterId().getEncounterId().toString());
+        clientDescription.put("exam_id", patientExamForm.getExamId().toString());
+
+        //JSONArray clientDecease = new JSONArray();
+        JSONObject clientDecease = new JSONObject();
+        if (patientExamForm.getFinaldiseaseId() != null) {
+            clientDecease.put("decease_id", patientExamForm.getFinaldiseaseId().toString());
+            clientDecease.put("decease_name", patientExamForm.getFinalDisease().toString());
+        } else {
+            clientDecease.put("decease_id", null);
+            clientDecease.put("decease_name", null);
+        }
+        //clientDecease.add(clientDeceaseObj);
+
+        JSONArray clientData = new JSONArray();
+        //get symptom list
+        List<SymptomModel> symptomList = Context.getService(pregnancycdssserviceService.class).getAllSymptoms();
+        //process all symptoms
+        for (SymptomModel tmpSymptom : symptomList) {
+            if (tmpSymptom != null) {
+                //prepare arrayitem (data row) object
+                JSONObject symptOptPatientRecord = new JSONObject();
+                //check symptom type
+                if (tmpSymptom.getIsMulti()) {
+                    //get symptom options list
+                    List<SymptomOptionModel> symptOptionList = tmpSymptom.getSymptOpt();
+                    //precess each symptom option
+                    for (SymptomOptionModel tmpSymptOption : symptOptionList) {
+                        if (tmpSymptOption != null) {
+                            //will look like YES/NO mode in GAEDecission tree
+                            Integer isSelectedSymptOptId = patientExamForm.isSymptomOptionSelected(tmpSymptOption.getSymptOptId());
+                            symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId().intValue());
+                            symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName().toString());
+                            symptOptPatientRecord.put("opt_id", isSelectedSymptOptId);
+                            symptOptPatientRecord.put("opt_name", tmpSymptOption.getOptName().toString());
+                            //add array item (data row)
+                            clientData.add(symptOptPatientRecord);
+                        }
+                    }
+                } else {
+                    String tmpSymptOptName = null;
+                    //get selected option for iven symptom
+                    Integer tmpSelectedSymptOptId = patientExamForm.getFirstSelectedSymptomOption(tmpSymptom.getSymptId());
+                    //get symptom name fr the existed selections
+                    if (tmpSelectedSymptOptId != null) {
+                        SymptomOptionModel tmpSelectedSymptOpt = Context.getService(pregnancycdssserviceService.class).getSymptOptionById(tmpSelectedSymptOptId);
+                        tmpSymptOptName = tmpSelectedSymptOpt.getOptName().toString();
+                    }
+                    //will look like multichoice mode in GAEDecission tree 
+                    symptOptPatientRecord.put("symp_id", tmpSymptom.getSymptId().intValue());
+                    symptOptPatientRecord.put("symp_name", tmpSymptom.getSymptName().toString());
+                    symptOptPatientRecord.put("opt_id", tmpSelectedSymptOptId);
+                    symptOptPatientRecord.put("opt_name", tmpSymptOptName);
+                    //add array item (data row)
+                    clientData.add(symptOptPatientRecord);
+                }
+            }
+        }
+        //construct row object
+        jsonPatientGAEDataObj.put("client_description", clientDescription);
+        jsonPatientGAEDataObj.put("client_decease", clientDecease);
+        jsonPatientGAEDataObj.put("client_data", clientData);
+        //return row object
+        return jsonPatientGAEDataObj;
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 }

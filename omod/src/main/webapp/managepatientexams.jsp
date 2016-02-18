@@ -35,7 +35,7 @@
         alert('attempt to submit all');
         jQuery.ajax({  
             type : 'GET',   
-            url : '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree.json_all',   
+            url : '${pageContext.request.contextPath}/module/pregnancycdss/gAEDecisionTree/all.json',   
             //data : 'examId=' + examId + '&encounterId=' + encounterId + '&patientId=' + patientId,  
             dataType : 'json',
             success : function(response) {
